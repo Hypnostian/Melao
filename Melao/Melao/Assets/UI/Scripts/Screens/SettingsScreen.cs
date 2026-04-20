@@ -44,21 +44,12 @@ public class SettingsScreen : MonoBehaviour
 
     public void OnMusicVolumeChanged(float value)
     {
-        // AudioMixer usa decibeles: convertir de 0-1 a -80/0 dB
-        float db = value > 0.001f
-            ? Mathf.Log10(value) * 20f
-            : -80f;
-        audioMixer.SetFloat("MusicVolume", db);
-        PlayerPrefs.SetFloat(KEY_MUSIC, value);
+        AudioManager.Instance.SetMusicVolume(value);
     }
 
     public void OnSFXVolumeChanged(float value)
     {
-        float db = value > 0.001f
-            ? Mathf.Log10(value) * 20f
-            : -80f;
-        audioMixer.SetFloat("SFXVolume", db);
-        PlayerPrefs.SetFloat(KEY_SFX, value);
+        AudioManager.Instance.SetSFXVolume(value);
     }
 
     // — Control —
@@ -74,26 +65,36 @@ public class SettingsScreen : MonoBehaviour
 
     private void LoadSettings()
     {
-        float music = PlayerPrefs.GetFloat(KEY_MUSIC, 0.8f);
-        float sfx   = PlayerPrefs.GetFloat(KEY_SFX,   1.0f);
-        bool  vib   = PlayerPrefs.GetInt(KEY_VIB,   1) == 1;
+        SaveData data = SaveSystem.Load();
 
-        musicSlider.value     = music;
-        sfxSlider.value       = sfx;
-        vibrationToggle.isOn  = vib;
+        // Desuscribir eventos antes de asignar valores
+        musicSlider.onValueChanged.RemoveListener(OnMusicVolumeChanged);
+        sfxSlider.onValueChanged.RemoveListener(OnSFXVolumeChanged);
 
-        // Aplicar al mixer también al cargar
-        OnMusicVolumeChanged(music);
-        OnSFXVolumeChanged(sfx);
+        // Asignar valores sin disparar eventos
+        musicSlider.value = data.musicVolume;
+        sfxSlider.value   = data.sfxVolume;
+        vibrationToggle.isOn = data.vibration;
+
+        // Volver a suscribir eventos
+        musicSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+        sfxSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
     }
 
     // — Botón volver —
 
     public void OnBackPressed()
     {
-        PlayerPrefs.Save(); // guardar al salir
+        //TODO: repuesto en caso de que no funcione
+        /*PlayerPrefs.Save(); // guardar al salir
         UIManager.Instance.ShowScreen("MainMenu");
         // Si venía de pausa, el PauseScreen puede sobreescribir esto
-        // cuando implementes un sistema de pantalla anterior (back stack)
+        // cuando implementes un sistema de pantalla anterior (back stack)*/
+        SaveSystem.SaveSettings(
+            musicSlider.value,
+            sfxSlider.value,
+            vibrationToggle.isOn
+        );
+        UIManager.Instance.ShowScreen("MainMenu");
     }
 }
