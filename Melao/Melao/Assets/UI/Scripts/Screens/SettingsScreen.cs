@@ -44,11 +44,13 @@ public class SettingsScreen : MonoBehaviour
 
     public void OnMusicVolumeChanged(float value)
     {
+        if (AudioManager.Instance == null) return;
         AudioManager.Instance.SetMusicVolume(value);
     }
 
     public void OnSFXVolumeChanged(float value)
     {
+        if (AudioManager.Instance == null) return;
         AudioManager.Instance.SetSFXVolume(value);
     }
 
