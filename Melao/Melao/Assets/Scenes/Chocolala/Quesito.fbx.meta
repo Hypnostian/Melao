@@ -3,7 +3,17 @@ guid: e35c502ab18fd8643959981e321e8ac9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface19
+    second: {fileID: 2100000, guid: 81b0edf9ca71ca040b246664b551ffad, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Quesito Texture
+    second: {fileID: 2800000, guid: 3268b2e686626fb4f8647cf141467f04, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +98,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.16
+    globalScale: 16
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

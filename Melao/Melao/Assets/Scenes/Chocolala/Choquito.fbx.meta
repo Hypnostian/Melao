@@ -3,7 +3,17 @@ guid: f428bc6ce3bd9bd40a576c8b8535a11e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ponque
+    second: {fileID: 2100000, guid: e0912b2a930b5304b8b0d96bd809b1e1, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: choquito
+    second: {fileID: 2800000, guid: d3cab1151d1209245a68bbd95989c5d8, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

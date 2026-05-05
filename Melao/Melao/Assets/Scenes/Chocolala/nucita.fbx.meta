@@ -3,7 +3,37 @@ guid: b10d0cb81d32cdf48b3e1213bc6953ef
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader1
+    second: {fileID: 2100000, guid: 3bfa7e0605d3dd8498764dc661ee4ce0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface7
+    second: {fileID: 2100000, guid: 6743af4b29f276f438908fff4d488aa6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface8
+    second: {fileID: 2100000, guid: 583e0b54582dd3e4aa15247483c1631f, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: PalitoNucitaaaaaa
+    second: {fileID: 2800000, guid: c543a690eb11eea49a4fe965ee583d45, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Pepel celofan NUCITA
+    second: {fileID: 2800000, guid: 160dc5599cffa184ab030574f5bf9f41, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: relleno nucitaaaaa
+    second: {fileID: 2800000, guid: 56378f639e210f5438f4119230756d2a, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +118,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.17999999
+    globalScale: 18
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
