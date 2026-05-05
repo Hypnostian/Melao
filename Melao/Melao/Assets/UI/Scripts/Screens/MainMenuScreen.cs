@@ -5,7 +5,7 @@ public class MainMenuScreen : MonoBehaviour
     public void OnPlayPressed()
     {
         // Ir a selección de región/nivel
-        SceneLoader.Instance.LoadScene("RegionSelect");
+        SceneLoader.Instance.LoadScene("Nivel 1 Quipto");
     }
 
     public void OnSettingsPressed()

@@ -6,8 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/UIScene.unity
+    guid: 7aa0de59d82156945ba4fabbef9a38a0
+  - enabled: 1
     path: Assets/Scenes/Nivel 1 Quipto.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Nivel 2 Mas-melito.unity
+    guid: d45b6ef5a38e55149bb6300400d3a676
+  - enabled: 1
+    path: Assets/Scenes/Nivel 3 Boronitas.unity
+    guid: 5391fe2a3a1f80f47a2b993eb1e7d64e
+  - enabled: 1
+    path: Assets/Scenes/Nivel 4 Choco-Lala.unity
+    guid: d771fcff4d505a94db7af504cfcefd2d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

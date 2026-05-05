@@ -54,5 +54,8 @@ public class SceneLoader : MonoBehaviour
 
             yield return null;
         }
+
+        // TEMPORAL: inicializar HUD sin jugador para verificar que se ve
+        HUDController.Instance?.InitHearts(3, 3);
     }
 }

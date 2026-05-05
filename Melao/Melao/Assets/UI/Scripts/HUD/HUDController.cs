@@ -1,67 +1,79 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class HUDController : MonoBehaviour
 {
     public static HUDController Instance { get; private set; }
 
-    [Header("Vida")]
-    [SerializeField] private Slider healthBar;
-    [SerializeField] private Text healthText;
+    [Header("Corazones")]
+    [SerializeField] private Transform heartsContainer;
+    [SerializeField] private GameObject heartPrefab;
+    [SerializeField] private Sprite heartFull;
+    [SerializeField] private Sprite heartEmpty;
+    [SerializeField] private Sprite heartExtra; // sprite especial del 4to corazón
 
     [Header("Power Up")]
     [SerializeField] private Image powerUpIcon;
     [SerializeField] private GameObject powerUpEmptySlot;
 
-    [Header("Checkpoints")]
-    [SerializeField] private Transform checkpointContainer;
-    [SerializeField] private GameObject checkpointDotPrefab;
+    // Lista de corazones instanciados en pantalla
+    private List<Image> heartImages = new List<Image>();
 
     private void Awake()
     {
         Instance = this;
     }
 
-    // Llamado por el PlayerHealth cuando cambia la vida
-    public void UpdateHealth(int current, int max)
+    // Llamado por PlayerHealth al iniciar o cuando cambia maxHearts
+    public void InitHearts(int maxHearts, int currentHearts)
     {
-        if (healthBar != null)
+        // Limpiar corazones anteriores
+        foreach (Transform child in heartsContainer)
+            Destroy(child.gameObject);
+
+        heartImages.Clear();
+
+        // Instanciar los corazones necesarios
+        for (int i = 0; i < maxHearts; i++)
         {
-            healthBar.maxValue = max;
-            healthBar.value = current;
+            GameObject heart = Instantiate(heartPrefab, heartsContainer);
+
+            // El 4to corazón usa sprite especial si existe
+            Image img = heart.GetComponent<Image>();
+            if (i == 3 && heartExtra != null)
+                img.sprite = heartExtra;
+
+            heartImages.Add(img);
         }
-        if (healthText != null)
-            healthText.text = $"{current}/{max}";
+
+        // Actualizar estado visual
+        UpdateHearts(currentHearts, maxHearts);
+        UpdatePowerUp(null);
     }
 
-    // Llamado cuando el jugador recoge un power up
+    // Actualizar qué corazones están llenos o vacíos
+    public void UpdateHearts(int currentHearts, int maxHearts)
+    {
+        for (int i = 0; i < heartImages.Count; i++)
+        {
+            heartImages[i].sprite = i < currentHearts ? heartFull : heartEmpty;
+        }
+    }
+
+    // Llamado cuando el jugador consigue el power up de corazón extra
+    public void UnlockExtraHeart(int currentHearts)
+    {
+        // Redibujar con el nuevo máximo de 4
+        InitHearts(4, currentHearts);
+    }
+
+    // Llamado cuando el jugador recoge o pierde un power up
     public void UpdatePowerUp(Sprite icon)
     {
         bool hasPowerUp = icon != null;
         powerUpIcon.gameObject.SetActive(hasPowerUp);
         powerUpEmptySlot.SetActive(!hasPowerUp);
         if (hasPowerUp) powerUpIcon.sprite = icon;
-    }
-
-    // Genera visualmente los puntos de checkpoint al cargar el nivel
-    public void InitCheckpoints(int count)
-    {
-        foreach (Transform child in checkpointContainer)
-            Destroy(child.gameObject);
-
-        for (int i = 0; i < count; i++)
-            Instantiate(checkpointDotPrefab, checkpointContainer);
-    }
-
-    // Activa visualmente el checkpoint N
-    public void ActivateCheckpointDot(int index)
-    {
-        if (index < checkpointContainer.childCount)
-        {
-            Image dot = checkpointContainer
-                .GetChild(index)
-                .GetComponent<Image>();
-            if (dot != null) dot.color = Color.yellow;
-        }
     }
 }
