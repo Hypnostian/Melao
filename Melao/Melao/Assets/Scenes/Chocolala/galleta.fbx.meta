@@ -3,7 +3,17 @@ guid: 269e088ea5fe31c4fad51a5115e96a4e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface20
+    second: {fileID: 2100000, guid: c056a8bf9a3c3f5458064921ae187efc, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Textura Galleta Vainalla
+    second: {fileID: 2800000, guid: 07449daa65ac4ec49b2dc94623c4518f, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +98,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.055
+    globalScale: 5.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
