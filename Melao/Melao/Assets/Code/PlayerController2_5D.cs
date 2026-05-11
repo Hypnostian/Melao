@@ -92,6 +92,7 @@ void Awake()
 
     void Update()
     {
+        
         int combinedLayers = groundLayer | platformLayer;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, combinedLayers);
         if (isGrounded) lastTimeGrounded = Time.time;
