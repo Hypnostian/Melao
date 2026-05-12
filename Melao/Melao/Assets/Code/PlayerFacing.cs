@@ -12,7 +12,19 @@ public class PlayerFacing : MonoBehaviour
     [SerializeField] private float moveTurnSpeed = 8f;  // velocidad de rotación al moverse
     [SerializeField] private float minVelocityToTurn = 0.1f;
 
+    [Header("Aire")]
+    [Tooltip("Umbral de |velY| para considerar al jugador 'en el aire' cuando no podamos preguntarle al PlayerController.")]
+    [SerializeField] private float airVerticalSpeedThreshold = 0.3f;
+
     private bool facingRight = true;
+    private PlayerController2_5D playerController;
+
+    void Awake()
+    {
+        // Si el Rigidbody apunta al jugador, intentamos cachear el controller
+        // para saber si esta en el suelo sin depender de heuristicas.
+        if (rb != null) playerController = rb.GetComponent<PlayerController2_5D>();
+    }
 
     void Update()
     {
@@ -20,27 +32,40 @@ public class PlayerFacing : MonoBehaviour
 
         float velX = rb.linearVelocity.x;
 
-        // Si se está moviendo a la derecha
+        // Movimiento horizontal claro -> orienta el modelo en ese sentido.
         if (velX > minVelocityToTurn)
         {
             facingRight = true;
-            RotateTowards(Vector3.right);   // hacia X+
+            RotateTowards(Vector3.right);
+            return;
         }
-        // Si se está moviendo a la izquierda
-        else if (velX < -minVelocityToTurn)
+
+        if (velX < -minVelocityToTurn)
         {
             facingRight = false;
-            RotateTowards(Vector3.left);    // hacia X-
+            RotateTowards(Vector3.left);
+            return;
         }
-        else
+
+        // Sin velocidad horizontal significativa:
+        //   - En el aire: mantener el ultimo facing (para que un wall jump no
+        //     gire el modelo a frente-camara cuando el impulso X decae).
+        //   - En el piso quieta: mirar hacia la camara (estilo 2.5D).
+        bool inAir = playerController != null
+            ? !playerController.IsGrounded
+            : Mathf.Abs(rb.linearVelocity.y) > airVerticalSpeedThreshold;
+
+        if (inAir)
         {
-            // Está quieta → mira hacia la cámara
-            if (cameraRef)
-            {
-                Vector3 dir = (cameraRef.position - model.position).normalized;
-                dir.y = 0; // ignora la altura
-                RotateTowards(dir, idleFaceSpeed);
-            }
+            RotateTowards(facingRight ? Vector3.right : Vector3.left);
+            return;
+        }
+
+        if (cameraRef)
+        {
+            Vector3 dir = (cameraRef.position - model.position).normalized;
+            dir.y = 0;
+            RotateTowards(dir, idleFaceSpeed);
         }
     }
 

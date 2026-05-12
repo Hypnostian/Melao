@@ -46,6 +46,10 @@ public class PlayerController2_5D : MonoBehaviour
     private float wallStickCounter = 0f;
     // --------------------------
 
+    [Header("Nivel (override por escena)")]
+    [Tooltip("Si esta activado, A va a la derecha y D a la izquierda. Por defecto OFF; activar SOLO en escenas donde el nivel corre de derecha a izquierda.")]
+    public bool invertHorizontalInput = false;
+
     private Rigidbody rb;
     private CapsuleCollider capsule;
     private Vector2 moveInput;
@@ -58,6 +62,18 @@ public class PlayerController2_5D : MonoBehaviour
     private bool touchingWallLeft;
     private bool touchingWallRight;
     private float lastTimeOnWall;
+
+    // -1 = izquierda, +1 = derecha, 0 = ninguna. Reseteado al tocar suelo o pared opuesta.
+    private int lastWallSideJumpedFrom = 0;
+
+    // Velocidad horizontal REAL del frame anterior (delta de posicion / dt).
+    // Se usa para que la animacion no muestre "caminando" si la pared bloquea el movimiento.
+    private float realHorizontalSpeed;
+    private Vector3 lastFixedPos;
+
+    // Lectura publica del estado de pisada (lo usa PlayerFacing para no rotar
+    // hacia camara mientras esta en el aire).
+    public bool IsGrounded => isGrounded;
 
 void Awake()
 {
@@ -88,32 +104,49 @@ void Awake()
         (lockZ ? RigidbodyConstraints.FreezePositionZ : 0);
 
     rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+    lastFixedPos = rb.position;
 }
 
     void Update()
     {
-        
+
         int combinedLayers = groundLayer | platformLayer;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, combinedLayers);
-        if (isGrounded) lastTimeGrounded = Time.time;
 
-        touchingWallLeft = false;
-        touchingWallRight = false;
-
+        // Caso especial: estar parado sobre la CIMA de una pared (ej. Choquito).
+        // Un raycast estrictamente vertical evita falsos positivos al rozar el lado.
         if (!isGrounded)
         {
-            Vector3 origin = transform.position + Vector3.up * (capsule.height * 0.4f);
-            touchingWallLeft = Physics.Raycast(origin, Vector3.left, wallCheckDistance, wallLayer);
-            touchingWallRight = Physics.Raycast(origin, Vector3.right, wallCheckDistance, wallLayer);
-
-            if (touchingWallLeft || touchingWallRight)
-            {
-                lastTimeOnWall = Time.time;
-
-                // ★ Reiniciar stick antes del slide
-                wallStickCounter = wallStickTime;
-            }
+            Vector3 rayOrigin = groundCheck.position + Vector3.up * 0.05f;
+            float rayLen = groundCheckRadius + 0.15f;
+            if (Physics.Raycast(rayOrigin, Vector3.down, rayLen, wallLayer, QueryTriggerInteraction.Ignore))
+                isGrounded = true;
         }
+
+        if (isGrounded)
+        {
+            lastTimeGrounded = Time.time;
+            // Al pisar suelo, se reactiva el wall jump en cualquier lado.
+            lastWallSideJumpedFrom = 0;
+        }
+
+        // Wall raycast SIEMPRE (no solo en aire) para que la animacion
+        // de caminata se suprima si estamos empujando contra una pared en el piso.
+        Vector3 wallOrigin = transform.position + Vector3.up * (capsule.height * 0.4f);
+        touchingWallLeft = Physics.Raycast(wallOrigin, Vector3.left, wallCheckDistance, wallLayer);
+        touchingWallRight = Physics.Raycast(wallOrigin, Vector3.right, wallCheckDistance, wallLayer);
+
+        // Logica de slide/grace solo aplica si NO esta en el suelo.
+        if (!isGrounded && (touchingWallLeft || touchingWallRight))
+        {
+            lastTimeOnWall = Time.time;
+            wallStickCounter = wallStickTime;
+        }
+
+        // Si tocamos la pared opuesta a la que usamos por ultima vez, reactivar wall jump.
+        if (lastWallSideJumpedFrom == -1 && touchingWallRight) lastWallSideJumpedFrom = 0;
+        if (lastWallSideJumpedFrom ==  1 && touchingWallLeft)  lastWallSideJumpedFrom = 0;
 
         if (jumpPressed)
         {
@@ -174,6 +207,11 @@ void Awake()
             v.z = 0f;
             rb.linearVelocity = v;
         }
+
+        // Velocidad horizontal REAL (cuanto realmente se movio este step).
+        float dx = rb.position.x - lastFixedPos.x;
+        realHorizontalSpeed = Mathf.Abs(dx) / Mathf.Max(Time.fixedDeltaTime, 0.0001f);
+        lastFixedPos = rb.position;
     }
 
     private void TryPerformJump()
@@ -184,19 +222,37 @@ void Awake()
 
         if (canWallJump && jumpBuffered)
         {
-            animator.SetBool(ANIM_WALLJUMP, true);
+            // Lado de la pared que el jugador esta tocando (-1 izquierda, +1 derecha).
+            int wallSide = touchingWallLeft ? -1 : (touchingWallRight ? 1 : 0);
 
-            int dir = touchingWallLeft ? 1 : (touchingWallRight ? -1 : 0);
+            // Bloquear wall jump consecutivo desde la MISMA pared.
+            // Se reactiva al pisar suelo o al tocar la pared opuesta (ver Update).
+            if (wallSide == 0 || wallSide == lastWallSideJumpedFrom)
+            {
+                // No hay pared real o ya se uso esta: caemos al jump normal de abajo si aplica.
+            }
+            else
+            {
+                // WallJump como Trigger (auto-reset al consumirse).
+                // Antes era Bool y la transicion AnyState->Walljump se re-disparaba
+                // cada frame mientras el bool estaba en true, reseteando la
+                // animacion al frame 0.
+                animator.SetTrigger(ANIM_WALLJUMP);
 
-            Vector3 vel = rb.linearVelocity;
-            vel.y = 0f;
-            rb.linearVelocity = vel;
+                // Empuje hacia la direccion opuesta a la pared.
+                int pushDir = -wallSide;
 
-            Vector3 impulse = new Vector3(dir * wallJumpSideForce, wallJumpUpForce, 0f);
-            rb.AddForce(impulse, ForceMode.VelocityChange);
+                Vector3 vel = rb.linearVelocity;
+                vel.y = 0f;
+                rb.linearVelocity = vel;
 
-            lastTimeJumpPressed = -999f;
-            return;
+                Vector3 impulse = new Vector3(pushDir * wallJumpSideForce, wallJumpUpForce, 0f);
+                rb.AddForce(impulse, ForceMode.VelocityChange);
+
+                lastWallSideJumpedFrom = wallSide;
+                lastTimeJumpPressed = -999f;
+                return;
+            }
         }
 
         if (jumpBuffered && canCoyote)
@@ -215,23 +271,32 @@ void Awake()
 
     private void UpdateAnimations()
     {
-        float horizontalSpeed = Mathf.Abs(rb.linearVelocity.x);
-        animator.SetFloat("Speed", horizontalSpeed);
+        // Usar la velocidad REAL (delta de posicion), no el target velocity.
+        // Asi cuando una pared bloquea el movimiento, la animacion no se confunde.
+        float speedForAnim = realHorizontalSpeed;
+        animator.SetFloat("Speed", speedForAnim);
 
         animator.SetBool("IsGround", isGrounded);
 
-        bool caminando = horizontalSpeed > 0.1f && isGrounded;
+        // 'Caminando' SIN requisito de isGrounded: asi cuando el player despega
+        // saltando con movimiento horizontal, la animacion Jump_corriendo SI puede
+        // dispararse (la transicion AnyState->Jump_corriendo exige Caminando=true
+        // Y IsGround=false en el mismo frame).
+        bool pressingIntoWall =
+            (moveInput.x > 0.1f && touchingWallRight) ||
+            (moveInput.x < -0.1f && touchingWallLeft);
+
+        bool caminando = speedForAnim > 0.1f && !pressingIntoWall;
         animator.SetBool("Caminando", caminando);
 
-        if (isGrounded)
-        {
-            animator.SetBool(ANIM_WALLJUMP, false);
-        }
+        // (WallJump ya no es Bool: se dispara con SetTrigger arriba y se
+        // auto-resetea cuando la transicion lo consume.)
     }
 
     private void OnMove(InputValue value)
     {
         float inputX = value.Get<float>();
+        if (invertHorizontalInput) inputX = -inputX;
         moveInput = new Vector2(inputX, 0f);
     }
 
