@@ -135,12 +135,14 @@ MonoBehaviour:
   moveSpeed: 6.5
   acceleration: 60
   airControl: 0.6
-  jumpForce: 5.5
+  jumpForce: 7.5
   coyoteTime: 0.1
   jumpBuffer: 0.1
+  weight: 1.2
+  fallGravityMultiplier: 1.6
   wallCheckDistance: 0.35
-  wallJumpUpForce: 5.5
-  wallJumpSideForce: 7.5
+  wallJumpUpForce: 7
+  wallJumpSideForce: 6.5
   wallGraceTime: 0.04
   wallLayer:
     serializedVersion: 2
@@ -152,12 +154,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundCheck: {fileID: 6203773761600684794}
-  groundCheckRadius: 0.15
+  groundCheckRadius: 0.22
   lockZ: 1
   animator: {fileID: 8574355478893391310}
   jumpTriggerParam: JumpTrig
   wallSlideSpeed: -2
   wallStickTime: 0.2
+  dynamicFriction: 0.4
+  staticFriction: 0.6
 --- !u!114 &8284344124802518666
 MonoBehaviour:
   m_ObjectHideFlags: 0

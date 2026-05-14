@@ -370,13 +370,29 @@ public static class Mapa4SetupTool
     // ---------------------------------------------------------------
     private static void SetupVolcano(GameObject go)
     {
-        var vol = go.GetComponent<VolcanoExploder>();
-        if (vol == null) vol = Undo.AddComponent<VolcanoExploder>(go);
-        Undo.RecordObject(vol, "Configure VolcanoExploder");
-        // Forzar valores correctos aunque ya existiera con valores antiguos.
-        vol.explosionRadius = 0.45f;
-        vol.playerLayer = 1 << LAYER_PLAYER;
-        EditorUtility.SetDirty(vol);
+        // El comportamiento de "volcan/explosion" se reemplaza por un LASER vertical
+        // entre el relleno (este objeto) y el chocobreak superior. Si en una
+        // corrida anterior se anadio VolcanoExploder al objeto, lo removemos.
+        DestroyIfExists<VolcanoExploder>(go);
+
+        var laser = go.GetComponent<ChocoBreakLaser>();
+        if (laser == null) laser = Undo.AddComponent<ChocoBreakLaser>(go);
+        Undo.RecordObject(laser, "Configure ChocoBreakLaser");
+        laser.playerLayer = 1 << LAYER_PLAYER;
+        // El laser busca chocobreaks (Ground) hacia arriba por defecto.
+        laser.searchLayer = (1 << LAYER_GROUND);
+
+        // Forzar tiempos y aspecto correctos aunque ya existiera con valores viejos.
+        laser.idleDuration = 1.1f;
+        laser.warningDuration = 0.3f;
+        laser.activeDuration = 0.5f;
+        laser.beamHalfWidth = 0.35f;
+        laser.widthWarning = 0.18f;
+        laser.widthActive = 0.7f;
+        laser.colorIdle = new Color(0.95f, 0.15f, 0.35f, 0f);
+        laser.colorWarning = new Color(0.95f, 0.2f, 0.4f, 0.6f);
+        laser.colorActive = new Color(1f, 0.1f, 0.35f, 1f);
+        EditorUtility.SetDirty(laser);
     }
 
     private static Transform FindRellenoChild(Transform root)

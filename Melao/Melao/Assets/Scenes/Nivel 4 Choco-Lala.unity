@@ -269,7 +269,7 @@ PrefabInstance:
       addedObject: {fileID: 1786098862}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1786098863}
+      addedObject: {fileID: 1786098867}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1937702925}
@@ -421,7 +421,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &30902166
+--- !u!114 &30902170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -430,27 +430,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 30902161}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!4 &39619762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a06bde16a5c05634bbe9b1e6ac899782, type: 3}
@@ -747,7 +748,7 @@ PrefabInstance:
       addedObject: {fileID: 1071531239}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1071531240}
+      addedObject: {fileID: 1071531244}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1410983611}
@@ -875,8 +876,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &84125084
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -985,7 +988,7 @@ PrefabInstance:
       addedObject: {fileID: 135989222}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 135989223}
+      addedObject: {fileID: 135989227}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 902690249}
@@ -1568,7 +1571,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &135989223
+--- !u!114 &135989227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1577,27 +1580,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 135989218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!4 &141464426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 337c745d972449b4e93fe2537516094d, type: 3}
@@ -1702,8 +1706,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &150621286
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1959,7 +1965,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &189022877
+--- !u!114 &189022881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1968,27 +1974,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 189022872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &189586693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2623,7 +2630,7 @@ PrefabInstance:
       addedObject: {fileID: 2052598477}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2052598478}
+      addedObject: {fileID: 2052598482}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1394733755}
@@ -3529,7 +3536,7 @@ PrefabInstance:
       addedObject: {fileID: 777960003}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 777960004}
+      addedObject: {fileID: 777960008}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 131641597}
@@ -3588,7 +3595,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &298420338
+--- !u!114 &298420342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3597,27 +3604,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 298420333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &298815401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3952,7 +3960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2bee49f786dab894dba4472390c1de98, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8888547
+      value: -2.586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2bee49f786dab894dba4472390c1de98, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4016,7 +4024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2bee49f786dab894dba4472390c1de98, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8888547
+      value: -2.586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2bee49f786dab894dba4472390c1de98, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4084,8 +4092,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &361781412
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4338,7 +4348,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &369616157
+--- !u!114 &369616161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4347,27 +4357,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 369616152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &372525474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5084,7 +5095,7 @@ PrefabInstance:
       addedObject: {fileID: 1003097287}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1003097288}
+      addedObject: {fileID: 1003097292}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 622933469}
@@ -5869,7 +5880,7 @@ PrefabInstance:
       addedObject: {fileID: 1253632590}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1253632591}
+      addedObject: {fileID: 1253632595}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 276429899}
@@ -6561,7 +6572,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &509551174
+--- !u!114 &509551178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6570,27 +6581,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 509551169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &509725766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29d18652463fae84490297560ff6268a, type: 3}
@@ -6613,8 +6625,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &509725771
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6762,7 +6776,7 @@ PrefabInstance:
       addedObject: {fileID: 1155998776}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1155998777}
+      addedObject: {fileID: 1155998781}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2074891945}
@@ -6905,7 +6919,7 @@ PrefabInstance:
       addedObject: {fileID: 982620666}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 982620667}
+      addedObject: {fileID: 982620671}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1564210494}
@@ -6932,8 +6946,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &536514968
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10352,7 +10368,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &758544507
+--- !u!114 &758544511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10361,27 +10377,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 758544502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &765949154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10696,7 +10713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2bee49f786dab894dba4472390c1de98, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8888547
+      value: -2.586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2bee49f786dab894dba4472390c1de98, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10784,7 +10801,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &777960004
+--- !u!114 &777960008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10793,27 +10810,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 777959999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &785229897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11564,7 +11582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b10d0cb81d32cdf48b3e1213bc6953ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 29.23391
+      value: 28.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b10d0cb81d32cdf48b3e1213bc6953ef, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12396,7 +12414,7 @@ PrefabInstance:
       addedObject: {fileID: 30902165}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 30902166}
+      addedObject: {fileID: 30902170}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 979561594}
@@ -13068,7 +13086,7 @@ PrefabInstance:
       addedObject: {fileID: 509551173}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 509551174}
+      addedObject: {fileID: 509551178}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 818250759}
@@ -13462,7 +13480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b10d0cb81d32cdf48b3e1213bc6953ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 29.23391
+      value: 28.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b10d0cb81d32cdf48b3e1213bc6953ef, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13953,7 +13971,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &982620667
+--- !u!114 &982620671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13962,27 +13980,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 982620662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &982836322 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -60467368681041815, guid: b10d0cb81d32cdf48b3e1213bc6953ef, type: 3}
@@ -14313,7 +14332,7 @@ PrefabInstance:
       addedObject: {fileID: 1520025843}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1520025844}
+      addedObject: {fileID: 1520025848}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 656574143}
@@ -14407,7 +14426,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1003097288
+--- !u!114 &1003097292
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14416,27 +14435,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1003097283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &1004628166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26566ba32df861e44b10f2afaa2cef36, type: 3}
@@ -14906,7 +14926,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1033008355
+--- !u!114 &1033008359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14915,27 +14935,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1033008350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!4 &1042474661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
@@ -15488,7 +15509,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1071531240
+--- !u!114 &1071531244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15497,27 +15518,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1071531235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &1073697385 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5d4381143ab059847ac9072abf590a28, type: 3}
@@ -15895,7 +15917,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1092839186
+--- !u!114 &1092839190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15904,27 +15926,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092839181}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &1093231574 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
@@ -15979,8 +16002,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1093246081
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16079,7 +16104,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1103197290
+--- !u!114 &1103197294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16088,27 +16113,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1103197285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &1103533475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16487,7 +16513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 269e088ea5fe31c4fad51a5115e96a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.7988546
+      value: -2.586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 269e088ea5fe31c4fad51a5115e96a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16660,8 +16686,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1143085548
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16879,7 +16907,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1155998777
+--- !u!114 &1155998781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16888,27 +16916,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1155998772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &1157662785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26566ba32df861e44b10f2afaa2cef36, type: 3}
@@ -16963,8 +16992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1162797436
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -17894,7 +17925,7 @@ PrefabInstance:
       addedObject: {fileID: 369616156}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 369616157}
+      addedObject: {fileID: 369616161}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 544179918}
@@ -18382,7 +18413,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1253632591
+--- !u!114 &1253632595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18391,27 +18422,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1253632586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1001 &1254378010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19446,7 +19478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 269e088ea5fe31c4fad51a5115e96a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.7988546
+      value: -2.586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 269e088ea5fe31c4fad51a5115e96a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19670,8 +19702,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1312737970
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -19826,7 +19860,7 @@ Transform:
   m_GameObject: {fileID: 1319160829}
   serializedVersion: 2
   m_LocalRotation: {x: -0.2088818, y: 0.02972591, z: -0.009012882, w: -0.97744745}
-  m_LocalPosition: {x: 13.26, y: 4.99, z: -6.669}
+  m_LocalPosition: {x: -29, y: 34.88, z: -6.669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20528,7 +20562,7 @@ PrefabInstance:
       addedObject: {fileID: 1092839185}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1092839186}
+      addedObject: {fileID: 1092839190}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 104092553}
@@ -21112,7 +21146,7 @@ PrefabInstance:
       addedObject: {fileID: 298420337}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 298420338}
+      addedObject: {fileID: 298420342}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 96714374}
@@ -22938,7 +22972,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1520025844
+--- !u!114 &1520025848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22947,27 +22981,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1520025839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!4 &1526684936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a06bde16a5c05634bbe9b1e6ac899782, type: 3}
@@ -23667,8 +23702,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1585027158
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25081,8 +25118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1685896402
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25420,11 +25459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41.92391
+      value: 41.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.1788547
+      value: -2.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25921,7 +25960,7 @@ PrefabInstance:
       addedObject: {fileID: 189022876}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 189022877}
+      addedObject: {fileID: 189022881}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1452483275}
@@ -26415,11 +26454,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -53.617992
+      value: -53.77
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.643909
+      value: 10.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26459,7 +26498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26528,7 +26567,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &1786098863
+--- !u!114 &1786098867
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26537,27 +26576,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786098858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &1791296795
 GameObject:
   m_ObjectHideFlags: 0
@@ -28027,7 +28067,7 @@ PrefabInstance:
       addedObject: {fileID: 758544506}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 758544507}
+      addedObject: {fileID: 758544511}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1994566619}
@@ -28197,7 +28237,7 @@ PrefabInstance:
       addedObject: {fileID: 1103197289}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1103197290}
+      addedObject: {fileID: 1103197294}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 297092522}
@@ -28615,7 +28655,7 @@ PrefabInstance:
       addedObject: {fileID: 2099024377}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2099024378}
+      addedObject: {fileID: 2099024382}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 926198062}
@@ -29481,8 +29521,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ba675d0b0a084aa91b412cf9f1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 12
-  onlyFromAbove: 1
+  bounceForce: 6
+  onlyFromAbove: 0
+  topTolerance: 0.12
+  requireFalling: 0
 --- !u!64 &1985284872
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -30326,7 +30368,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &2052598478
+--- !u!114 &2052598482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30335,27 +30377,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2052598473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!4 &2053858455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d7d0a3bb1b8635242b9c8dedd8d22147, type: 3}
@@ -30897,7 +30940,7 @@ PrefabInstance:
       addedObject: {fileID: 1033008354}
     - targetCorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1033008355}
+      addedObject: {fileID: 1033008359}
     - targetCorrespondingSourceObject: {fileID: 3779745573541866595, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 812982820}
@@ -31216,7 +31259,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6716422767354150541, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
---- !u!114 &2099024378
+--- !u!114 &2099024382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31225,27 +31268,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2099024373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d344607c41fd49c6fd3cd2fc4909729, type: 3}
+  m_Script: {fileID: 11500000, guid: 18c74a3b51fbb17c8d0d46fbf0584135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleDuration: 3
-  warningDuration: 0.5
-  explosionDuration: 0.35
-  regenerateDuration: 1.5
+  idleDuration: 1.1
+  warningDuration: 0.3
+  activeDuration: 0.5
   startDelay: 0
-  explosionRadius: 0.45
+  searchDirection: {x: 0, y: 1, z: 0}
+  maxSearchDistance: 20
+  searchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  fallbackBeamLength: 6
+  beamHalfWidth: 0.35
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  warningScale: 1.2
-  explodingScale: 1.6
-  showRadiusIndicator: 1
-  indicatorHeight: 0.05
-  indicatorSegments: 32
-  indicatorWidth: 0.04
-  colorIdle: {r: 1, g: 0.6, b: 0, a: 0.35}
-  colorWarning: {r: 1, g: 0.4, b: 0, a: 0.9}
-  colorExplode: {r: 1, g: 0.1, b: 0, a: 1}
+  colorIdle: {r: 0.95, g: 0.15, b: 0.35, a: 0}
+  colorWarning: {r: 0.95, g: 0.2, b: 0.4, a: 0.6}
+  colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
+  widthWarning: 0.18
+  widthActive: 0.7
 --- !u!1 &2103649716 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2711328419397675742, guid: 337c745d972449b4e93fe2537516094d, type: 3}
@@ -31994,7 +32038,7 @@ Transform:
   m_GameObject: {fileID: 6128247438172777370}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 13.26, y: 2.99, z: -1.669}
+  m_LocalPosition: {x: -29, y: 32.88, z: -1.669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32391,7 +32435,7 @@ Transform:
   m_GameObject: {fileID: 1611573163047532861}
   serializedVersion: 2
   m_LocalRotation: {x: -0.2088818, y: 0.02972591, z: -0.009012882, w: -0.97744745}
-  m_LocalPosition: {x: 13.26, y: 4.99, z: -6.669}
+  m_LocalPosition: {x: -29, y: 34.88, z: -6.669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32737,16 +32781,19 @@ MonoBehaviour:
   moveSpeed: 6.5
   acceleration: 60
   airControl: 0.6
-  jumpForce: 5.5
+  jumpForce: 7.5
   coyoteTime: 0.1
   jumpBuffer: 0.1
+  weight: 1.2
+  fallGravityMultiplier: 1.6
   wallCheckDistance: 0.35
-  wallJumpUpForce: 5.5
+  wallJumpUpForce: 7
   wallJumpSideForce: 7.5
   wallGraceTime: 0.04
   wallLayer:
     serializedVersion: 2
     m_Bits: 512
+  wallJumpInputLockout: 0.15
   platformLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -32755,6 +32802,8 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 6203773760871394032}
   groundCheckRadius: 0.15
+  dynamicFriction: 0.4
+  staticFriction: 0.6
   lockZ: 1
   animator: {fileID: 8574355479640442308}
   jumpTriggerParam: JumpTrig
