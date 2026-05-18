@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: 9fc727b547ab62247b28bb7805d49f8e
+guid: f9715a09993ed334f94767648ad2249e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface19
+    second: {fileID: 2100000, guid: 605ea41236b17674288ad20fe48609f9, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TOSTADO Texture
+    second: {fileID: 2800000, guid: d3f138b07474c8f4a85ee46caf47a5e3, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,7 +43,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 16
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -88,7 +98,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.16
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
