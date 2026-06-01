@@ -1,24 +1,21 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    // — Pantallas —
     [SerializeField] private GameObject mainMenuScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject settingsScreen;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompleteScreen;
+    [SerializeField] private GameObject creditsScreen;
     [SerializeField] private GameObject hud;
 
-    // Pantalla activa actualmente
     private GameObject currentScreen;
 
     private void Awake()
     {
-        // Singleton: solo existe un UIManager en toda la partida
         if (Instance == null)
         {
             Instance = this;
@@ -31,7 +28,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Extraer HideAllScreens como método privado reutilizable
     private void HideAllScreens()
     {
         mainMenuScreen.SetActive(false);
@@ -39,18 +35,17 @@ public class UIManager : MonoBehaviour
         settingsScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         levelCompleteScreen.SetActive(false);
+        creditsScreen.SetActive(false);
         hud.SetActive(false);
     }
 
     private void Start()
     {
-        // Al iniciar, mostrar solo el menú principal
         ShowScreen("MainMenu");
     }
 
     public void ShowScreen(string screenName)
     {
-        // Ocultar pantalla actual antes de mostrar la nueva
         if (currentScreen != null)
             currentScreen.SetActive(false);
 
@@ -61,6 +56,7 @@ public class UIManager : MonoBehaviour
             "Settings"      => settingsScreen,
             "GameOver"      => gameOverScreen,
             "LevelComplete" => levelCompleteScreen,
+            "Credits"       => creditsScreen,
             "HUD"           => hud,
             _               => null
         };
@@ -75,9 +71,12 @@ public class UIManager : MonoBehaviour
         currentScreen = next;
     }
 
-    // Llamar desde cualquier script del juego para pausar
+    public bool IsInGame => currentScreen == hud;
+    public bool IsPaused => currentScreen == pauseScreen;
+
     public void OpenPause()
     {
+        if (!IsInGame) return;
         Time.timeScale = 0f;
         ShowScreen("Pause");
     }

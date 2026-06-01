@@ -1,13 +1,15 @@
 using UnityEngine;
 
-// Maneja el respawn del jugador desde el ultimo checkpoint (o el spawn inicial).
-// Sistema reutilizable: cualquier hazard llama a Kill() o KillNow().
 [DisallowMultipleComponent]
 public class PlayerRespawn : MonoBehaviour
 {
     [Header("Spawn")]
     [Tooltip("Si esta vacio, se usa la posicion inicial del transform al iniciar la escena.")]
     [SerializeField] private Transform initialSpawnPoint;
+
+    [Header("Vidas")]
+    [SerializeField] private int maxLives = 3;
+    private int currentLives;
 
     [Header("Reset")]
     [Tooltip("Tiempo (segundos) en negro/sin control tras morir. 0 = instantaneo.")]
@@ -35,6 +37,8 @@ public class PlayerRespawn : MonoBehaviour
             currentSpawnPos = transform.position;
             currentSpawnRot = transform.rotation;
         }
+
+        currentLives = maxLives;
     }
 
     public void SetCheckpoint(Vector3 position, Quaternion rotation)
@@ -49,17 +53,30 @@ public class PlayerRespawn : MonoBehaviour
         SetCheckpoint(t.position, t.rotation);
     }
 
-    // Llamada estandar desde un hazard.
+    private bool TryLoseLife()
+    {
+        currentLives--;
+        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+
+        if (currentLives <= 0)
+        {
+            UIManager.Instance?.TriggerGameOver();
+            return true;
+        }
+        return false;
+    }
+
     public void Kill()
     {
         if (isRespawning) return;
+        if (TryLoseLife()) return;
         StartCoroutine(RespawnRoutine());
     }
 
-    // Respawn inmediato sin freeze.
     public void KillNow()
     {
         if (isRespawning) return;
+        if (TryLoseLife()) return;
         DoRespawn();
     }
 

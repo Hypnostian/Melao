@@ -6,8 +6,8 @@ public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
 
-    // Tiempo mínimo que se muestra la pantalla de carga (en segundos)
-    [SerializeField] private float minLoadTime = 1.5f;
+    private string currentGameplayScene;
+    private GameObject uiCamera;
 
     private void Awake()
     {
@@ -15,6 +15,7 @@ public class SceneLoader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            uiCamera = GameObject.Find("UICamera");
         }
         else Destroy(gameObject);
     }
@@ -26,36 +27,46 @@ public class SceneLoader : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
-        string current = SceneManager.GetActiveScene().name;
-        LoadScene(current);
+        if (!string.IsNullOrEmpty(currentGameplayScene))
+            LoadScene(currentGameplayScene);
+    }
+
+    public void UnloadCurrentScene()
+    {
+        if (!string.IsNullOrEmpty(currentGameplayScene))
+            StartCoroutine(UnloadCurrentAsync());
+    }
+
+    private IEnumerator UnloadCurrentAsync()
+    {
+        var op = SceneManager.UnloadSceneAsync(currentGameplayScene);
+        if (op != null) yield return op;
+        currentGameplayScene = null;
+        if (uiCamera != null) uiCamera.SetActive(true);
     }
 
     private IEnumerator LoadAsync(string sceneName)
     {
         Time.timeScale = 1f;
 
-        // TODO: activar pantalla de carga aquí cuando esté lista
-        // UIManager.Instance.ShowScreen("Loading");
-
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
-        op.allowSceneActivation = false;
-
-        float elapsed = 0f;
-
-        while (!op.isDone)
+        if (!string.IsNullOrEmpty(currentGameplayScene))
         {
-            elapsed += Time.deltaTime;
-
-            // Esperar a que cargue Y a que pase el tiempo mínimo
-            if (op.progress >= 0.9f && elapsed >= minLoadTime)
-            {
-                op.allowSceneActivation = true;
-            }
-
-            yield return null;
+            var unloadOp = SceneManager.UnloadSceneAsync(currentGameplayScene);
+            if (unloadOp != null) yield return unloadOp;
+            currentGameplayScene = null;
         }
 
-        // TEMPORAL: inicializar HUD sin jugador para verificar que se ve
+        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        currentGameplayScene = sceneName;
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+
+        if (uiCamera != null) uiCamera.SetActive(false);
+
+        if (UIManager.Instance != null)
+            UIManager.Instance.ShowScreen("HUD");
+
         HUDController.Instance?.InitHearts(3, 3);
+        ControlRebinder.Instance?.ApplySavedOverrides();
     }
 }

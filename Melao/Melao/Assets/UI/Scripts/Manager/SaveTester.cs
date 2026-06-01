@@ -1,11 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SaveTester : MonoBehaviour
 {
     private void Update()
     {
-        // Presiona G para ver el contenido del archivo guardado
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame)
         {
             SaveData data = SaveSystem.Load();
             Debug.Log($"Música: {data.musicVolume}");

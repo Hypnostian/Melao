@@ -9,12 +9,15 @@ public class PauseScreen : MonoBehaviour
 
     public void OnSettingsPressed()
     {
+        var settings = FindFirstObjectByType<SettingsScreen>(FindObjectsInactive.Include);
+        if (settings != null) settings.SetReturnScreen("Pause");
         UIManager.Instance.ShowScreen("Settings");
     }
 
     public void OnExitToMenuPressed()
     {
         Time.timeScale = 1f;
-        SceneLoader.Instance.LoadScene("MainMenu");
+        UIManager.Instance.ShowScreen("MainMenu");
+        SceneLoader.Instance.UnloadCurrentScene();
     }
 }

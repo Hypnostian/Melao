@@ -46,7 +46,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HeartPower"",
+                    ""name"": ""UsePowerUp"",
                     ""type"": ""Button"",
                     ""id"": ""4ae32375-145d-41e3-89ef-ac8429691316"",
                     ""expectedControlType"": """",
@@ -55,7 +55,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""JellyPower"",
+                    ""name"": ""NextPowerUp"",
                     ""type"": ""Button"",
                     ""id"": ""ecbd5bd2-5aaf-4c2b-99a9-156f6e555ffc"",
                     ""expectedControlType"": """",
@@ -64,7 +64,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ChipPower"",
+                    ""name"": ""PrevPowerUp"",
                     ""type"": ""Button"",
                     ""id"": ""e6b6be43-954c-47e6-ba9c-502443ea8932"",
                     ""expectedControlType"": """",
@@ -109,6 +109,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e1e20204-8b3c-4b12-95f1-7ce870b39a76"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""bcbd66c2-b03a-4a6f-8c84-2b0c8183f103"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -120,34 +131,78 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5167f1c0-8a9a-4906-a91f-09b8a846bbe9"",
-                    ""path"": ""<Keyboard>/j"",
+                    ""id"": ""cce4f79d-9cba-41a2-8a22-2ef5e7dbbfbb"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""HeartPower"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5167f1c0-8a9a-4906-a91f-09b8a846bbe9"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UsePowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d23a6372-2a03-44df-9e2d-09a7bbeeecbd"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UsePowerUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""35dcc7e7-973d-4a27-b797-2af87ba8308c"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""JellyPower"",
+                    ""action"": ""NextPowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05be8bbd-f8cb-4b0a-8ab0-50dbdfbbd7c5"",
+                    ""path"": ""<Gamepad>/dpadDown"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextPowerUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""4131d2eb-ea4d-493c-a658-503cfa666258"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ChipPower"",
+                    ""action"": ""PrevPowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e357d3cc-a9f5-4376-9a8c-3e45675f2b7a"",
+                    ""path"": ""<Gamepad>/dpadUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrevPowerUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -160,9 +215,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_HeartPower = m_Player.FindAction("HeartPower", throwIfNotFound: true);
-        m_Player_JellyPower = m_Player.FindAction("JellyPower", throwIfNotFound: true);
-        m_Player_ChipPower = m_Player.FindAction("ChipPower", throwIfNotFound: true);
+        m_Player_UsePowerUp = m_Player.FindAction("UsePowerUp", throwIfNotFound: true);
+        m_Player_NextPowerUp = m_Player.FindAction("NextPowerUp", throwIfNotFound: true);
+        m_Player_PrevPowerUp = m_Player.FindAction("PrevPowerUp", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -231,18 +286,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_HeartPower;
-    private readonly InputAction m_Player_JellyPower;
-    private readonly InputAction m_Player_ChipPower;
+    private readonly InputAction m_Player_UsePowerUp;
+    private readonly InputAction m_Player_NextPowerUp;
+    private readonly InputAction m_Player_PrevPowerUp;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @HeartPower => m_Wrapper.m_Player_HeartPower;
-        public InputAction @JellyPower => m_Wrapper.m_Player_JellyPower;
-        public InputAction @ChipPower => m_Wrapper.m_Player_ChipPower;
+        public InputAction @UsePowerUp => m_Wrapper.m_Player_UsePowerUp;
+        public InputAction @NextPowerUp => m_Wrapper.m_Player_NextPowerUp;
+        public InputAction @PrevPowerUp => m_Wrapper.m_Player_PrevPowerUp;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,15 +313,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @HeartPower.started += instance.OnHeartPower;
-            @HeartPower.performed += instance.OnHeartPower;
-            @HeartPower.canceled += instance.OnHeartPower;
-            @JellyPower.started += instance.OnJellyPower;
-            @JellyPower.performed += instance.OnJellyPower;
-            @JellyPower.canceled += instance.OnJellyPower;
-            @ChipPower.started += instance.OnChipPower;
-            @ChipPower.performed += instance.OnChipPower;
-            @ChipPower.canceled += instance.OnChipPower;
+            @UsePowerUp.started += instance.OnUsePowerUp;
+            @UsePowerUp.performed += instance.OnUsePowerUp;
+            @UsePowerUp.canceled += instance.OnUsePowerUp;
+            @NextPowerUp.started += instance.OnNextPowerUp;
+            @NextPowerUp.performed += instance.OnNextPowerUp;
+            @NextPowerUp.canceled += instance.OnNextPowerUp;
+            @PrevPowerUp.started += instance.OnPrevPowerUp;
+            @PrevPowerUp.performed += instance.OnPrevPowerUp;
+            @PrevPowerUp.canceled += instance.OnPrevPowerUp;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -277,15 +332,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @HeartPower.started -= instance.OnHeartPower;
-            @HeartPower.performed -= instance.OnHeartPower;
-            @HeartPower.canceled -= instance.OnHeartPower;
-            @JellyPower.started -= instance.OnJellyPower;
-            @JellyPower.performed -= instance.OnJellyPower;
-            @JellyPower.canceled -= instance.OnJellyPower;
-            @ChipPower.started -= instance.OnChipPower;
-            @ChipPower.performed -= instance.OnChipPower;
-            @ChipPower.canceled -= instance.OnChipPower;
+            @UsePowerUp.started -= instance.OnUsePowerUp;
+            @UsePowerUp.performed -= instance.OnUsePowerUp;
+            @UsePowerUp.canceled -= instance.OnUsePowerUp;
+            @NextPowerUp.started -= instance.OnNextPowerUp;
+            @NextPowerUp.performed -= instance.OnNextPowerUp;
+            @NextPowerUp.canceled -= instance.OnNextPowerUp;
+            @PrevPowerUp.started -= instance.OnPrevPowerUp;
+            @PrevPowerUp.performed -= instance.OnPrevPowerUp;
+            @PrevPowerUp.canceled -= instance.OnPrevPowerUp;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -307,8 +362,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnHeartPower(InputAction.CallbackContext context);
-        void OnJellyPower(InputAction.CallbackContext context);
-        void OnChipPower(InputAction.CallbackContext context);
+        void OnUsePowerUp(InputAction.CallbackContext context);
+        void OnNextPowerUp(InputAction.CallbackContext context);
+        void OnPrevPowerUp(InputAction.CallbackContext context);
     }
 }

@@ -11,6 +11,7 @@ public class GameOverScreen : MonoBehaviour
     public void OnExitToMenuPressed()
     {
         Time.timeScale = 1f;
-        SceneLoader.Instance.LoadScene("MainMenu");
+        UIManager.Instance.ShowScreen("MainMenu");
+        SceneLoader.Instance.UnloadCurrentScene();
     }
 }

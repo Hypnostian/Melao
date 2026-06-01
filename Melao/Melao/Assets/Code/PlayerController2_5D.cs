@@ -54,6 +54,7 @@ public class PlayerController2_5D : MonoBehaviour
     private CapsuleCollider capsule;
     private Vector2 moveInput;
     private bool jumpPressed;
+    private PlayerControls playerControls;
 
     private bool isGrounded;
     private float lastTimeGrounded;
@@ -106,7 +107,30 @@ void Awake()
     rb.interpolation = RigidbodyInterpolation.Interpolate;
 
     lastFixedPos = rb.position;
+
+    playerControls = new PlayerControls();
+    string json = PlayerPrefs.GetString("ControlRebinds", "");
+    if (!string.IsNullOrEmpty(json))
+        playerControls.asset.LoadBindingOverridesFromJson(json);
 }
+
+    void OnEnable()
+    {
+        if (playerControls == null) return;
+        playerControls.Player.Move.performed += OnMovePerformed;
+        playerControls.Player.Move.canceled += OnMoveCanceled;
+        playerControls.Player.Jump.performed += OnJumpPerformed;
+        playerControls.Player.Enable();
+    }
+
+    void OnDisable()
+    {
+        if (playerControls == null) return;
+        playerControls.Player.Move.performed -= OnMovePerformed;
+        playerControls.Player.Move.canceled -= OnMoveCanceled;
+        playerControls.Player.Jump.performed -= OnJumpPerformed;
+        playerControls.Player.Disable();
+    }
 
     void Update()
     {
@@ -293,19 +317,30 @@ void Awake()
         // auto-resetea cuando la transicion lo consume.)
     }
 
-    private void OnMove(InputValue value)
+    public void ReloadOverrides()
     {
-        float inputX = value.Get<float>();
+        if (playerControls == null) return;
+        playerControls.asset.RemoveAllBindingOverrides();
+        string json = PlayerPrefs.GetString("ControlRebinds", "");
+        if (!string.IsNullOrEmpty(json))
+            playerControls.asset.LoadBindingOverridesFromJson(json);
+    }
+
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        float inputX = ctx.ReadValue<float>();
         if (invertHorizontalInput) inputX = -inputX;
         moveInput = new Vector2(inputX, 0f);
     }
 
-    private void OnJump(InputValue value)
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
     {
-        if (value.isPressed)
-        {
-            jumpPressed = true;
-        }
+        moveInput = Vector2.zero;
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext ctx)
+    {
+        jumpPressed = true;
     }
 
     private void OnDrawGizmosSelected()

@@ -68,6 +68,25 @@ public static class SaveSystem
         Save();
     }
 
+    // — Último nivel (continuar) —
+
+    public static void SaveLastLevel(string levelName)
+    {
+        SaveData data = Load();
+        data.lastLevel = levelName;
+        Save();
+    }
+
+    public static string GetLastLevel()
+    {
+        return Load().lastLevel;
+    }
+
+    public static bool HasSavedGame()
+    {
+        return File.Exists(PATH);
+    }
+
     // — Borrar partida —
 
     public static void DeleteSave()

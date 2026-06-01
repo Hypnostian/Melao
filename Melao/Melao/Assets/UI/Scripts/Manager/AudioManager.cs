@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
+        if (audioMixer == null) return;
         float db = value > 0.001f
             ? Mathf.Log10(value) * 20f
             : -80f;
@@ -41,6 +42,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetSFXVolume(float value)
     {
+        if (audioMixer == null) return;
         float db = value > 0.001f
             ? Mathf.Log10(value) * 20f
             : -80f;
