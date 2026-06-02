@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f157cf3a88dffc145a2769789e04d685
+guid: 009bfccbd41f5bc4db8b54ebb9b75208
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface5
-    second: {fileID: 2100000, guid: 71d05f6bc78bb9744beb9d0bf2217dde, type: 2}
+      name: standardSurface9
+    second: {fileID: 2100000, guid: a3b54929aee09994098fd7fc1712f7c3, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: TEXTU_Merengue
-    second: {fileID: 2800000, guid: cb6693b45146d1d4fa18a7418a4de7da, type: 3}
+      name: TEXTU_Oblea
+    second: {fileID: 2800000, guid: 568bcc27b85214b41a2cb0ecc73ca3ff, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -43,7 +43,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 16
+    globalScale: 15
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -98,7 +98,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.16
+    globalScale: 0.14999999
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
