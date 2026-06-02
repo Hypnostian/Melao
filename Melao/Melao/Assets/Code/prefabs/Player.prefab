@@ -1524,7 +1524,7 @@ MonoBehaviour:
   dynamicFriction: 0.4
   staticFriction: 0.6
   lockZ: 1
-  jumpSound: {fileID: 8300000, guid: 5718a90a70351054684b9a5572980492, type: 3}
+  jumpSound: {fileID: 8300000, guid: ff1920a19b6ff674d8de2df4f4957528, type: 3}
   animator: {fileID: 6444043041597093109}
   jumpTriggerParam: JumpTrig
   wallSlideSpeed: -2

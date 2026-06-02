@@ -22,8 +22,13 @@ public class LevelEndTrigger : MonoBehaviour
         SaveSystem.MarkLevelComplete(currentLevelName);
 
         if (!string.IsNullOrEmpty(nextLevelName))
+        {
             SaveSystem.SaveNextLevel(nextLevelName);
-
-        UIManager.Instance.TriggerLevelComplete();
+            UIManager.Instance.TriggerLevelComplete();
+        }
+        else
+        {
+            UIManager.Instance.TriggerGameComplete();
+        }
     }
 }
