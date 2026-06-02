@@ -78,10 +78,13 @@ public class PlayerRespawn : MonoBehaviour
     // nunca queda en un limbo "inmortal" (que era el bug al llegar a 0 vidas).
     private void HandleDeath(bool immediate)
     {
+        StopAllCoroutines();
+        var gp = Gamepad.current;
+        if (gp != null) gp.SetMotorSpeeds(0f, 0f);
+
         currentLives--;
         invulnUntil = Time.time + invulnDuration;   // i-frames: 1 golpe = 1 corazon
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(deathSound);
-        StartCoroutine(VibrateRoutine());
 
         if (currentLives <= 0)
         {
@@ -90,6 +93,7 @@ public class PlayerRespawn : MonoBehaviour
         }
 
         HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        StartCoroutine(VibrateRoutine());
         Respawn(immediate);
     }
 
@@ -127,27 +131,26 @@ public class PlayerRespawn : MonoBehaviour
         rb.linearVelocity = v;
     }
 
-    // Se acabaron las vidas: reinicio. Funciona igual en CUALQUIER escena (no
-    // depende de que existan UIManager/HUD; por eso vive aqui, en PlayerRespawn).
     private void GameOver(bool immediate)
     {
-        currentLives = maxLives;                  // vuelve a tener las 3 vidas
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.TriggerGameOver();
+            return;
+        }
+
+        currentLives = maxLives;
         HUDController.Instance?.UpdateHearts(currentLives, maxLives);
 
         if (hasCheckpoint)
-        {
-            // Reinicio en el ultimo checkpoint (sin recargar: lo conserva).
             Respawn(immediate);
-        }
         else if (SceneLoader.Instance != null)
         {
-            // Sin checkpoint: reinicia el mapa desde el inicio (recarga la escena).
             Time.timeScale = 1f;
             SceneLoader.Instance.ReloadCurrentScene();
         }
         else
         {
-            // Fallback (escena cargada suelta, sin SceneLoader): al spawn inicial.
             Respawn(immediate);
         }
     }
@@ -158,13 +161,22 @@ public class PlayerRespawn : MonoBehaviour
         else StartCoroutine(RespawnRoutine());
     }
 
-    // Recupera vidas (power-up Heart). No supera maxLives. Devuelve true si
-    // realmente curo (estaba por debajo del maximo).
     public bool GainLife(int amount = 1)
     {
-        if (amount <= 0 || currentLives >= maxLives) return false;
-        currentLives = Mathf.Min(maxLives, currentLives + amount);
-        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        if (amount <= 0) return false;
+
+        if (currentLives >= maxLives)
+        {
+            maxLives++;
+            currentLives = maxLives;
+            HUDController.Instance?.AddHeartSlot();
+            HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        }
+        else
+        {
+            currentLives = Mathf.Min(maxLives, currentLives + amount);
+            HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        }
         return true;
     }
 
@@ -215,6 +227,12 @@ public class PlayerRespawn : MonoBehaviour
         gp.SetMotorSpeeds(0.8f, 0.6f);
         yield return new WaitForSecondsRealtime(0.2f);
         gp.SetMotorSpeeds(0f, 0f);
+    }
+
+    private void OnDisable()
+    {
+        var gp = Gamepad.current;
+        if (gp != null) gp.SetMotorSpeeds(0f, 0f);
     }
 
     private void DoRespawn()

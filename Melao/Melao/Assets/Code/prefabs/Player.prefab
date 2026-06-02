@@ -1639,7 +1639,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9fe931c04ff07418973451386d7b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icons: []
+  icons:
+  - type: 0
+    icon: {fileID: 21300000, guid: f92982b65433ca44fa3df60a3ac80504, type: 3}
+  - type: 1
+    icon: {fileID: 21300000, guid: f154700b27a60c845a9e48f41d5c2e1e, type: 3}
+  - type: 2
+    icon: {fileID: 21300000, guid: 68ad84a206e344740a666593fccd4b0b, type: 3}
+  - type: 3
+    icon: {fileID: 21300000, guid: 02b566e25bd84d0478c29e2f22a42adf, type: 3}
   cuquiProjectilePrefab: {fileID: 8440487239510489341, guid: 808cd1a5cbbf274469af05624331c206, type: 3}
   cuquiSpeed: 9
   cuquiCooldown: 3
