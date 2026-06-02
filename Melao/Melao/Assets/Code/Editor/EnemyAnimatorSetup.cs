@@ -16,6 +16,8 @@ using UnityEngine;
 //   SSS        (idle, Run cycle, Warning, Crash)   -> Sir_Saladin_Texturizado
 //   Yucat      (Idle, WalkCycle, Ataque)           -> Yucat_texturizado
 //   Ñuelito    (Walk Cycle, Shooting)              -> Nuelito_texturizadp
+//   DonPerico  (Idle, RunCycle, shoot)             -> Don_Perico_texturizado
+//   Rita       (idle, Walkcycle, Splash)           -> Rita_conTexturas
 //
 // NOTA: las animaciones son Generic (atadas a la jerarquia de huesos del rig_X).
 // Se asigna al Animator el Avatar PROPIO del modelo del personaje; los clips se
@@ -45,10 +47,12 @@ public static class EnemyAnimatorSetup
     {
         return new[]
         {
-            new EnemyDef { model = "Bonon_texturizado",       rig = "rig_bonon",   shortName = "Bonon",      build = BuildBonon,   keywords = new[]{ "bonon" },                 behavior = typeof(BononEnemy) },
-            new EnemyDef { model = "Sir_Saladin_Texturizado", rig = "rig_SSS",     shortName = "SirSaladin", build = BuildSaladin, keywords = new[]{ "saladin", "sir", "sss" }, behavior = typeof(SaladinBoss) },
-            new EnemyDef { model = "Yucat_texturizado",       rig = "rig_Yucat",   shortName = "Yucat",      build = BuildYucat,   keywords = new[]{ "yucat" },                 behavior = typeof(YucatEnemy) },
-            new EnemyDef { model = "Nuelito_texturizadp",     rig = "rig_Ñuelito", shortName = "Nuelito",    build = BuildNuelito, keywords = new[]{ "nuelito", "ñuelito" },    behavior = typeof(NuelitoEnemy) },
+            new EnemyDef { model = "Bonon_texturizado",       rig = "rig_bonon",   shortName = "Bonon",      build = BuildBonon,     keywords = new[]{ "bonon" },                          behavior = typeof(BononEnemy) },
+            new EnemyDef { model = "Sir_Saladin_Texturizado", rig = "rig_SSS",     shortName = "SirSaladin", build = BuildSaladin,   keywords = new[]{ "saladin", "sir", "sss" },          behavior = typeof(SaladinBoss) },
+            new EnemyDef { model = "Yucat_texturizado",       rig = "rig_Yucat",   shortName = "Yucat",      build = BuildYucat,     keywords = new[]{ "yucat" },                          behavior = typeof(YucatEnemy) },
+            new EnemyDef { model = "Nuelito_texturizadp",     rig = "rig_Ñuelito", shortName = "Nuelito",    build = BuildNuelito,   keywords = new[]{ "nuelito", "ñuelito" },             behavior = typeof(NuelitoEnemy) },
+            new EnemyDef { model = "Don_Perico_texturizado",  rig = "rig_DonP",    shortName = "DonPerico",  build = BuildDonPerico, keywords = new[]{ "perico", "donp", "don_perico" },    behavior = typeof(DonPericoEnemy) },
+            new EnemyDef { model = "Rita_conTexturas",        rig = "rig_Rita",    shortName = "Rita",       build = BuildRita,      keywords = new[]{ "rita" },                           behavior = typeof(RitaEnemy) },
         };
     }
 
@@ -148,6 +152,10 @@ public static class EnemyAnimatorSetup
                 ("SSS_Ani_idle", true), ("SSS_Ani_Run cycle", true), ("SSS_Ani_Warning", false), ("SSS_Ani_Crash", false) }),
             ("Nuelito", "rig_Ñuelito", new (string, bool)[] {
                 ("Ñuelito_ANIWalk Cycle", true), ("Ñuelito_ANIShooting", false) }),
+            ("DonPerico", "rig_DonP", new (string, bool)[] {
+                ("DonP_ani_Idle", true), ("DonP_ani_RunCycle", true), ("DonP_ani_shoot", false) }),
+            ("Rita", "rig_Rita", new (string, bool)[] {
+                ("rita_ani_idle", true), ("rita_ani_Walkcycle", true), ("rita_ani_Splash", false) }),
         };
     }
 
@@ -218,6 +226,10 @@ public static class EnemyAnimatorSetup
         if (mi == null) { Debug.LogWarning($"[EnemyAnim] No importer en {path}"); return null; }
         mi.animationType = ModelImporterAnimationType.Generic;
         mi.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+        // Algunos FBX de rig traen camaras/luces de la escena del artista. No las
+        // queremos en el prefab del enemigo: desactivar su importacion.
+        mi.importCameras = false;
+        mi.importLights = false;
         EditorUtility.SetDirty(mi);
         mi.SaveAndReimport();
         return LoadAvatarAtPath(path);
@@ -408,6 +420,44 @@ public static class EnemyAnimatorSetup
 
         var shoot = AddState(sm, "Shooting", Clip("Ñuelito_ANIShooting"));
         OneShot(sm, shoot, walk, "Shooting");
+        return ctrl;
+    }
+
+    // Don Perico: Idle <-> Run (Moving), Shoot one-shot (vuelve a Idle).
+    private static AnimatorController BuildDonPerico()
+    {
+        var ctrl = NewController("DonPerico");
+        ctrl.AddParameter("Moving", AnimatorControllerParameterType.Bool);
+        ctrl.AddParameter("Shoot", AnimatorControllerParameterType.Trigger);
+        var sm = ctrl.layers[0].stateMachine;
+
+        var idle = AddState(sm, "Idle", Clip("DonP_ani_Idle"));
+        var run  = AddState(sm, "Run",  Clip("DonP_ani_RunCycle"));
+        sm.defaultState = idle;
+        Bool(idle, run, "Moving", true);
+        Bool(run, idle, "Moving", false);
+
+        var shoot = AddState(sm, "Shoot", Clip("DonP_ani_shoot"));
+        OneShot(sm, shoot, idle, "Shoot");
+        return ctrl;
+    }
+
+    // Rita la frita: Idle <-> Walk (Moving), Splash one-shot (vuelve a Idle).
+    private static AnimatorController BuildRita()
+    {
+        var ctrl = NewController("Rita");
+        ctrl.AddParameter("Moving", AnimatorControllerParameterType.Bool);
+        ctrl.AddParameter("Splash", AnimatorControllerParameterType.Trigger);
+        var sm = ctrl.layers[0].stateMachine;
+
+        var idle = AddState(sm, "Idle", Clip("rita_ani_idle"));
+        var walk = AddState(sm, "Walk", Clip("rita_ani_Walkcycle"));
+        sm.defaultState = idle;
+        Bool(idle, walk, "Moving", true);
+        Bool(walk, idle, "Moving", false);
+
+        var splash = AddState(sm, "Splash", Clip("rita_ani_Splash"));
+        OneShot(sm, splash, idle, "Splash");
         return ctrl;
     }
 

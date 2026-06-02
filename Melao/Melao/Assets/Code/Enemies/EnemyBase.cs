@@ -258,12 +258,26 @@ public class EnemyBase : MonoBehaviour
             lastStompTime = Time.time;
             BouncePlayer();
             OnStomped();
-            TakeHit(1);
+            // Algunos enemigos (DonPerico) NO reciben daño por pisoton, solo por
+            // la espalda. Por defecto el pisoton si daña (comportamiento clasico).
+            if (StompDamagesEnemy()) TakeHit(1);
         }
         else
         {
-            KillPlayer();
+            // Contacto lateral. Por defecto mata a Pops. Subclases como DonPerico
+            // lo sobreescriben para recibir daño cuando el golpe viene por detras.
+            OnSideContact(other);
         }
+    }
+
+    // Hooks de vulnerabilidad (defaults = comportamiento clasico de EnemyBase):
+    //  - StompDamagesEnemy: si false, el pisoton rebota a Pops pero no daña.
+    //  - OnSideContact: que pasa en un contacto lateral (no pisoton).
+    protected virtual bool StompDamagesEnemy() => true;
+
+    protected virtual void OnSideContact(Collider other)
+    {
+        KillPlayer();
     }
 
     protected bool IsPlayer(Collider other)
