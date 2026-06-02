@@ -24,7 +24,7 @@ public class MainMenuScreen : MonoBehaviour
     public void OnNewGamePressed()
     {
         SaveSystem.DeleteSave();
-        SceneLoader.Instance.LoadScene(FirstLevel);
+        UIManager.Instance.ShowScreen("Cutscene");
     }
 
     public void OnSettingsPressed()

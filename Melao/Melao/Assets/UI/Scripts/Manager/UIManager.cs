@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompleteScreen;
     [SerializeField] private GameObject creditsScreen;
+    [SerializeField] private GameObject cutsceneScreen;
     [SerializeField] private GameObject hud;
 
     private GameObject currentScreen;
@@ -36,6 +37,7 @@ public class UIManager : MonoBehaviour
         gameOverScreen.SetActive(false);
         levelCompleteScreen.SetActive(false);
         creditsScreen.SetActive(false);
+        cutsceneScreen.SetActive(false);
         hud.SetActive(false);
     }
 
@@ -63,6 +65,7 @@ public class UIManager : MonoBehaviour
             "GameOver"      => gameOverScreen,
             "LevelComplete" => levelCompleteScreen,
             "Credits"       => creditsScreen,
+            "Cutscene"      => cutsceneScreen,
             "HUD"           => hud,
             _               => null
         };
@@ -90,6 +93,7 @@ public class UIManager : MonoBehaviour
         if (screen == gameOverScreen) return "GameOver";
         if (screen == levelCompleteScreen) return "LevelComplete";
         if (screen == creditsScreen) return "Credits";
+        if (screen == cutsceneScreen) return "Cutscene";
         if (screen == hud) return "HUD";
         return null;
     }
