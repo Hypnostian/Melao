@@ -350,6 +350,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &28510103
 MonoBehaviour:
@@ -3160,6 +3161,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &238428474
 MeshCollider:
@@ -3406,6 +3408,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &252444353
 MeshCollider:
@@ -4343,6 +4346,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &305653477
 MeshCollider:
@@ -4552,6 +4556,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &335870529
 MeshCollider:
@@ -5306,6 +5311,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &386225469
 MeshCollider:
@@ -6479,6 +6485,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &464494043
 MonoBehaviour:
@@ -7221,6 +7228,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &499735515
 MeshCollider:
@@ -7586,6 +7594,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &515952995
 MeshCollider:
@@ -8257,6 +8266,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &549080632
 MeshCollider:
@@ -8723,6 +8733,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &583817777
 MeshCollider:
@@ -9941,11 +9952,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6656204366482444646, guid: a63b6a2b9301517429c9ba7a93c321e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.12
+      value: 2.334
       objectReference: {fileID: 0}
     - target: {fileID: 6656204366482444646, guid: a63b6a2b9301517429c9ba7a93c321e3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.934
+      value: -1.567
       objectReference: {fileID: 0}
     - target: {fileID: 6656204366482444646, guid: a63b6a2b9301517429c9ba7a93c321e3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10077,6 +10088,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &653575433
 MeshCollider:
@@ -10233,6 +10245,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &658796762
 MeshCollider:
@@ -10437,6 +10450,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &665556224
 MeshCollider:
@@ -10887,6 +10901,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &702175879
 MeshCollider:
@@ -11028,6 +11043,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &722627691
 MeshCollider:
@@ -11448,6 +11464,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &740847647
 MonoBehaviour:
@@ -12412,6 +12429,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &787708682
 MeshCollider:
@@ -12457,6 +12475,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &790209421
 MeshCollider:
@@ -12519,6 +12538,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &791803843
 MonoBehaviour:
@@ -12534,7 +12554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 2.5
   speed: 1.5
-  invertDirection: 0
+  invertDirection: 1
   manualDirectionOverride: 0
   phaseOffset: 0
   startDelay: 0
@@ -12609,6 +12629,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &795781535
 MonoBehaviour:
@@ -13055,6 +13076,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &814798569
 MonoBehaviour:
@@ -13359,6 +13381,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &820657878
 MeshCollider:
@@ -13404,6 +13427,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &820801056
 MeshCollider:
@@ -14076,6 +14100,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &845481487
 MeshCollider:
@@ -14184,6 +14209,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &849961366
 MeshCollider:
@@ -14229,6 +14255,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &856157797
 MeshCollider:
@@ -14543,6 +14570,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &886836287
 MeshCollider:
@@ -15986,6 +16014,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &965663722
 MeshCollider:
@@ -16341,6 +16370,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &983676400
 MeshCollider:
@@ -16859,6 +16889,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1007845659
 MeshCollider:
@@ -17009,6 +17040,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1009354486
 MonoBehaviour:
@@ -17162,6 +17194,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1023937304
 MeshCollider:
@@ -17224,6 +17257,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1029481542
 MonoBehaviour:
@@ -17239,7 +17273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 2.5
   speed: 1.5
-  invertDirection: 1
+  invertDirection: 0
   manualDirectionOverride: 0
   phaseOffset: 0
   startDelay: 0
@@ -17616,6 +17650,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1058523451
 MeshCollider:
@@ -18013,6 +18048,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1073697389
 MeshCollider:
@@ -18075,6 +18111,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1074167007
 MonoBehaviour:
@@ -18510,6 +18547,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1098129230
 MeshCollider:
@@ -18989,6 +19027,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1139710765
 MeshCollider:
@@ -19039,6 +19078,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1140417903
 MonoBehaviour:
@@ -19632,6 +19672,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1172121129
 MeshCollider:
@@ -20459,6 +20500,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1201607030
 MeshCollider:
@@ -20842,6 +20884,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1240280126
 MeshCollider:
@@ -21282,6 +21325,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1268229710
 MeshCollider:
@@ -21625,6 +21669,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1284354348
 MonoBehaviour:
@@ -21794,6 +21839,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1291091385
 MeshCollider:
@@ -21914,6 +21960,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1300965430
 MeshCollider:
@@ -22058,6 +22105,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1308848673
 MeshCollider:
@@ -22228,6 +22276,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1313575565
 MeshCollider:
@@ -22533,6 +22582,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1320623188
 MeshCollider:
@@ -22605,6 +22655,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1322537430
 MeshCollider:
@@ -22767,6 +22818,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1350084542
 MeshCollider:
@@ -22812,6 +22864,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1352822906
 MeshCollider:
@@ -22857,6 +22910,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1353355465
 MeshCollider:
@@ -23009,6 +23063,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1356329206
 MeshCollider:
@@ -24140,6 +24195,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1412842362
 MeshCollider:
@@ -24190,6 +24246,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1413122351
 MonoBehaviour:
@@ -24530,6 +24587,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1437585156
 MeshCollider:
@@ -24575,6 +24633,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1438773331
 MeshCollider:
@@ -24875,6 +24934,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1446527544
 MeshCollider:
@@ -25175,6 +25235,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1466902257
 MeshCollider:
@@ -25322,6 +25383,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1473984006
 MeshCollider:
@@ -25598,6 +25660,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1487750681
 MeshCollider:
@@ -25718,6 +25781,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1492534144
 MeshCollider:
@@ -26114,6 +26178,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1515988329
 MeshCollider:
@@ -26159,6 +26224,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1517744908
 MeshCollider:
@@ -26209,6 +26275,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1518784137
 MonoBehaviour:
@@ -27298,6 +27365,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1597538765
 MeshCollider:
@@ -27343,6 +27411,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1597716789
 MeshCollider:
@@ -27585,6 +27654,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1626445721
 MeshCollider:
@@ -27746,6 +27816,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!114 &1633955166
 MonoBehaviour:
@@ -27824,6 +27895,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1640892193
 MeshCollider:
@@ -28111,6 +28183,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1660852545
 MeshCollider:
@@ -28156,6 +28229,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1663059077
 MeshCollider:
@@ -28347,6 +28421,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1677522369
 MeshCollider:
@@ -28429,6 +28504,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1684112112
 MeshCollider:
@@ -28522,6 +28598,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1685944509
 MeshCollider:
@@ -28599,6 +28676,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1697243503
 MeshCollider:
@@ -28742,6 +28820,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1705529547
 MeshCollider:
@@ -29742,6 +29821,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1775489200
 MeshCollider:
@@ -29855,6 +29935,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1781541483
 MeshCollider:
@@ -30320,6 +30401,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1804163819
 MeshCollider:
@@ -30365,6 +30447,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1813431501
 MeshCollider:
@@ -30479,6 +30562,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1815719102
 MeshCollider:
@@ -30556,6 +30640,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1822016244
 MeshCollider:
@@ -30767,6 +30852,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1840079954
 MeshCollider:
@@ -30817,6 +30903,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1847192630
 MeshCollider:
@@ -31318,6 +31405,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1875869107
 MeshCollider:
@@ -31510,6 +31598,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1892450932
 MeshCollider:
@@ -31630,6 +31719,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1894479584
 MeshCollider:
@@ -31675,6 +31765,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1898507143
 MeshCollider:
@@ -32049,6 +32140,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1921228285
 MeshCollider:
@@ -32337,6 +32429,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1942196032
 MeshCollider:
@@ -33042,6 +33135,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1976633028
 MeshCollider:
@@ -33194,6 +33288,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1983207444
 MeshCollider:
@@ -33350,6 +33445,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1987676361
 MeshCollider:
@@ -33422,6 +33518,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1995802645
 MeshCollider:
@@ -33467,6 +33564,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &1997783066
 MeshCollider:
@@ -33687,6 +33785,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2017479076
 MeshCollider:
@@ -33924,6 +34023,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2038199989
 MeshCollider:
@@ -34038,6 +34138,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2043027822
 MeshCollider:
@@ -34505,6 +34606,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2076813047
 MeshCollider:
@@ -34772,6 +34874,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2083413058
 MeshCollider:
@@ -34817,6 +34920,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2092539150
 MeshCollider:
@@ -34921,6 +35025,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2102917099
 MeshCollider:
@@ -35365,6 +35470,7 @@ MonoBehaviour:
     m_Bits: 128
   alsoUseTag: 1
   onlyKillFromTop: 0
+  lethal: 1
   retriggerCooldown: 0.25
 --- !u!64 &2136603069
 MeshCollider:

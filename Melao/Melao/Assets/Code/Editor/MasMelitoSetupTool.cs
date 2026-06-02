@@ -137,7 +137,7 @@ public static class MasMelitoSetupTool
     {
         SetLayerRecursive(go, LAYER_DEFAULT);
         EnsureMeshColliders(go, convex: true, isTrigger: true);
-        foreach (var h in AddToColliderHosts<HazardKill>(go, false)) ConfigHazard(h, false);
+        foreach (var h in AddToColliderHosts<HazardKill>(go, false)) ConfigHazard(h, false, lethal: false); // pinchos: 1 corazon + empuje
     }
 
     private static void SetWallSolid(GameObject go)
@@ -204,7 +204,7 @@ public static class MasMelitoSetupTool
         AddLiquidTrigger(go);
         var hz = go.GetComponent<HazardKill>();
         if (hz == null) hz = Undo.AddComponent<HazardKill>(go);
-        ConfigHazard(hz, false);
+        ConfigHazard(hz, false, lethal: true);   // arroz con leche (liquido): mortal
 
         // En cada malla (el "plane" liquido): olas + textura arroz con leche.
         foreach (var mf in go.GetComponentsInChildren<MeshFilter>(true))
@@ -327,10 +327,11 @@ public static class MasMelitoSetupTool
     // ---------------------------------------------------------------
     //   HELPERS
     // ---------------------------------------------------------------
-    private static void ConfigHazard(HazardKill h, bool fromTop)
+    private static void ConfigHazard(HazardKill h, bool fromTop, bool lethal)
     {
         Undo.RecordObject(h, "Configure Hazard");
         h.onlyKillFromTop = fromTop;
+        h.lethal = lethal;
         h.playerLayer = 1 << LAYER_PLAYER;
         EditorUtility.SetDirty(h);
     }
