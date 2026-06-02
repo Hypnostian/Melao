@@ -287,8 +287,11 @@ public static class Mapa4SetupTool
         mover.obstacleLayer = (1 << LAYER_GROUND) | (1 << LAYER_WALL) | (1 << LAYER_CHANGUA);
         EditorUtility.SetDirty(mover);
 
-        if (go.GetComponent<HazardKill>() == null)
-            Undo.AddComponent<HazardKill>(go);
+        var golHz = go.GetComponent<HazardKill>();
+        if (golHz == null) golHz = Undo.AddComponent<HazardKill>(go);
+        Undo.RecordObject(golHz, "Configure Hazard");
+        golHz.lethal = true;   // el gol aplasta: mortal (respawn en checkpoint)
+        EditorUtility.SetDirty(golHz);
 
         if (go.GetComponent<MovingPlatformMotionSender>() == null)
             Undo.AddComponent<MovingPlatformMotionSender>(go);
@@ -366,19 +369,22 @@ public static class Mapa4SetupTool
     // ---------------------------------------------------------------
     //   HAZARDS TRIGGER (queso punteagudo)
     // ---------------------------------------------------------------
-    private static void SetupHazardTrigger(GameObject go, int layer)
+    private static void SetupHazardTrigger(GameObject go, int layer, bool lethal = false)
     {
         SetLayerRecursive(go, layer);
         EnsureMeshColliders(go, convex: true, isTrigger: true);
 
-        if (go.GetComponent<HazardKill>() == null)
-            Undo.AddComponent<HazardKill>(go);
+        var h = go.GetComponent<HazardKill>();
+        if (h == null) h = Undo.AddComponent<HazardKill>(go);
+        Undo.RecordObject(h, "Configure Hazard");
+        h.lethal = lethal;   // pinchos = false (1 corazon + empuje); changua = true (mortal)
+        EditorUtility.SetDirty(h);
     }
 
     // Changua (y similares como nucita pCube6) en layer Changua.
     private static void SetupChanguaHazard(GameObject go)
     {
-        SetupHazardTrigger(go, LAYER_CHANGUA);
+        SetupHazardTrigger(go, LAYER_CHANGUA, lethal: true);
     }
 
     // ---------------------------------------------------------------

@@ -45,6 +45,14 @@ public class SaladinBoss : MonoBehaviour
     [Header("Plano 2.5D")]
     public bool lockToPlayerZ = true;
 
+    [Header("Feedback / Muerte")]
+    [Tooltip("Parpadeo rojo al recibir un golpe (igual que el resto de enemigos).")]
+    public bool flashOnHit = true;
+    public Color hitFlashColor = new Color(1f, 0.2f, 0.2f, 1f);
+    public float hitFlashDuration = 0.14f;
+    [Tooltip("Segundos antes de desaparecer tras morir.")]
+    public float destroyDelay = 1.5f;
+
     private enum S { Idle, Warning, Charge, Crash, Dead }
     private S state = S.Idle;
     private float timer;
@@ -202,6 +210,7 @@ public class SaladinBoss : MonoBehaviour
     private void Hit()
     {
         health--;
+        FlashDamage();                 // feedback: parpadeo rojo (golpe acertado)
         if (health <= 0) Die();
     }
 
@@ -211,6 +220,46 @@ public class SaladinBoss : MonoBehaviour
         SetBool("Moving", false);
         SetTrigger("Crash");
         foreach (var col in GetComponentsInChildren<Collider>(true)) col.enabled = false;
+        Destroy(gameObject, destroyDelay);   // desaparece tras morir (como los demas)
+    }
+
+    // -------- flash de daño (rojo) --------
+    private Renderer[] flashRenderers;
+    private MaterialPropertyBlock flashBlock;
+    private Coroutine flashCo;
+
+    private void FlashDamage()
+    {
+        if (!flashOnHit) return;
+        if (flashRenderers == null) flashRenderers = GetComponentsInChildren<Renderer>(true);
+        if (flashBlock == null) flashBlock = new MaterialPropertyBlock();
+        if (flashCo != null) StopCoroutine(flashCo);
+        flashCo = StartCoroutine(FlashRoutine());
+    }
+
+    private System.Collections.IEnumerator FlashRoutine()
+    {
+        SetFlash(true);
+        yield return new WaitForSeconds(hitFlashDuration);
+        SetFlash(false);
+    }
+
+    private void SetFlash(bool on)
+    {
+        if (flashRenderers == null) return;
+        for (int i = 0; i < flashRenderers.Length; i++)
+        {
+            var r = flashRenderers[i];
+            if (r == null) continue;
+            if (on)
+            {
+                r.GetPropertyBlock(flashBlock);
+                flashBlock.SetColor("_BaseColor", hitFlashColor);
+                flashBlock.SetColor("_Color", hitFlashColor);
+                r.SetPropertyBlock(flashBlock);
+            }
+            else r.SetPropertyBlock(null);
+        }
     }
 
     private void BouncePlayer()
@@ -223,7 +272,8 @@ public class SaladinBoss : MonoBehaviour
     {
         if (playerRespawn == null && player != null)
             playerRespawn = player.GetComponentInParent<PlayerRespawn>();
-        if (playerRespawn != null) playerRespawn.Kill();
+        // Resta 1 corazon con empuje + i-frames (no mata de golpe).
+        if (playerRespawn != null) playerRespawn.Damage(transform.position);
     }
 
     private bool IsPlayer(Collider other)
@@ -237,7 +287,9 @@ public class SaladinBoss : MonoBehaviour
     // -----------------------------------------------------------------
     private void AcquirePlayer()
     {
-        var go = GameObject.FindGameObjectWithTag("Player");
+        // Por componente, no por tag: no confundir a otro enemigo con Pops.
+        var pc = FindFirstObjectByType<PlayerController2_5D>();
+        GameObject go = pc != null ? pc.gameObject : GameObject.FindGameObjectWithTag("Player");
         if (go == null) return;
         player = go.transform;
         playerRespawn = go.GetComponentInParent<PlayerRespawn>();

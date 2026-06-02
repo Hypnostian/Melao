@@ -22,12 +22,24 @@ public class PlayerRespawn : MonoBehaviour
     [Tooltip("Si esta activado, congela el Rigidbody durante el freeze para evitar caidas.")]
     [SerializeField] private bool freezeRigidbodyOnDeath = true;
 
+    [Header("Daño / invulnerabilidad")]
+    [Tooltip("Tras recibir un golpe, segundos de invulnerabilidad. Garantiza que UN golpe = UN corazon (no drena toda la vida por contactos repetidos).")]
+    [SerializeField] private float invulnDuration = 1f;
+    [Tooltip("Empuje horizontal al recibir daño de espinas/enemigos (Damage). Pequeno.")]
+    [SerializeField] private float knockbackForce = 4f;
+    [Tooltip("Empuje vertical al recibir daño (para despegarlo del hazard).")]
+    [SerializeField] private float knockbackUp = 2.5f;
+
     private Vector3 currentSpawnPos;
     private Quaternion currentSpawnRot;
     private Rigidbody rb;
     private PlayerSizeModifier sizeModifier;
     private bool isRespawning;
     private bool hasCheckpoint;
+    private float invulnUntil = -999f;
+
+    // True durante la ventana de invulnerabilidad tras un golpe.
+    public bool IsInvulnerable => Time.time < invulnUntil;
 
     private void Awake()
     {
@@ -67,6 +79,7 @@ public class PlayerRespawn : MonoBehaviour
     private void HandleDeath(bool immediate)
     {
         currentLives--;
+        invulnUntil = Time.time + invulnDuration;   // i-frames: 1 golpe = 1 corazon
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(deathSound);
         StartCoroutine(VibrateRoutine());
 
@@ -78,6 +91,40 @@ public class PlayerRespawn : MonoBehaviour
 
         HUDController.Instance?.UpdateHearts(currentLives, maxLives);
         Respawn(immediate);
+    }
+
+    // Daño que NO respawnea: resta 1 corazon, empuja al jugador hacia atras y le da
+    // invulnerabilidad breve. Para espinas/enemigos: el jugador SIGUE jugando en su
+    // sitio (no teletransporta al checkpoint). Si las vidas llegan a 0 -> reinicio.
+    public void Damage(Vector3 sourcePosition)
+    {
+        if (isRespawning || IsInvulnerable) return;
+
+        currentLives--;
+        invulnUntil = Time.time + invulnDuration;
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(deathSound);
+        StartCoroutine(VibrateRoutine());
+        ApplyKnockback(sourcePosition);
+
+        if (currentLives <= 0)
+        {
+            GameOver(immediate: false);
+            return;
+        }
+
+        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        // NO respawnea: sigue jugando con i-frames + knockback.
+    }
+
+    private void ApplyKnockback(Vector3 sourcePosition)
+    {
+        if (rb == null) return;
+        float dir = Mathf.Sign(transform.position.x - sourcePosition.x);
+        if (dir == 0f) dir = -1f;
+        Vector3 v = rb.linearVelocity;
+        v.x = dir * knockbackForce;             // empuje pequeno hacia atras
+        v.y = Mathf.Max(v.y, knockbackUp);
+        rb.linearVelocity = v;
     }
 
     // Se acabaron las vidas: reinicio. Funciona igual en CUALQUIER escena (no
@@ -126,13 +173,13 @@ public class PlayerRespawn : MonoBehaviour
 
     public void Kill()
     {
-        if (isRespawning) return;
+        if (isRespawning || IsInvulnerable) return;
         HandleDeath(immediate: false);
     }
 
     public void KillNow()
     {
-        if (isRespawning) return;
+        if (isRespawning || IsInvulnerable) return;
         HandleDeath(immediate: true);
     }
 

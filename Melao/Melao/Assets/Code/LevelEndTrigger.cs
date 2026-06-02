@@ -19,16 +19,9 @@ public class LevelEndTrigger : MonoBehaviour
         if (triggered) return;
         triggered = true;
 
-        SaveSystem.MarkLevelComplete(currentLevelName);
-
-        if (!string.IsNullOrEmpty(nextLevelName))
-        {
-            SaveSystem.SaveNextLevel(nextLevelName);
-            UIManager.Instance.TriggerLevelComplete();
-        }
-        else
-        {
-            UIManager.Instance.TriggerGameComplete();
-        }
+        // Transicion con fundido a negro y carga del siguiente nivel (el fader
+        // marca el nivel completado y guarda el siguiente). Robusto: funciona
+        // aunque no haya UIManager/SceneLoader en la escena.
+        ScreenFader.GetOrCreate().FadeToLevel(nextLevelName, currentLevelName);
     }
 }

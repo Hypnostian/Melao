@@ -7,8 +7,10 @@ using UnityEngine;
 public class NuelitoEnemy : EnemyBase
 {
     [Header("Ñuelito - Disparo")]
-    [Tooltip("Distancia a la que ve a Pops y dispara.")]
+    [Tooltip("Distancia HORIZONTAL a la que ve a Pops y dispara.")]
     public float shootRange = 9f;
+    [Tooltip("Diferencia de ALTURA maxima para disparar. Evita disparar a Pops cuando esta en otra plataforma (lejos en vertical) y parece que 'dispara sin que este cerca'.")]
+    public float shootVerticalRange = 2.5f;
     [Tooltip("Cooldown entre disparos.")]
     public float shootCooldown = 1.6f;
     [Tooltip("Velocidad del proyectil de aceite (mas lento = se ve mejor).")]
@@ -36,7 +38,10 @@ public class NuelitoEnemy : EnemyBase
     {
         if (shootCdTimer > 0f) shootCdTimer -= Time.deltaTime;
 
-        if (player != null && PlayerHorizontalDistance() <= shootRange && HasLineOfSight())
+        bool sameHeight = player != null &&
+            Mathf.Abs(player.position.y - transform.position.y) <= shootVerticalRange;
+
+        if (player != null && PlayerHorizontalDistance() <= shootRange && sameHeight && HasLineOfSight())
         {
             aiming = true;
             dir = PlayerSide(); // encarar a Pops

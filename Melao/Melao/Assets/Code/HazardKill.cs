@@ -18,6 +18,11 @@ public class HazardKill : MonoBehaviour
     public bool onlyKillFromTop = false;
 
     [Header("Comportamiento")]
+    [Tooltip("Si esta activo (lava, caida, gol): MATA y respawnea en el checkpoint. " +
+             "Si NO (espinas/espaditas): solo resta 1 corazon, empuja hacia atras y " +
+             "da invulnerabilidad breve; el jugador sigue jugando donde esta.")]
+    public bool lethal = true;
+
     [Tooltip("Pequeno cooldown para evitar matar dos veces al mismo player en el mismo frame.")]
     public float retriggerCooldown = 0.25f;
 
@@ -61,7 +66,8 @@ public class HazardKill : MonoBehaviour
         if (respawn == null) return;
 
         lastKillTime = Time.time;
-        respawn.Kill();
+        if (lethal) respawn.Kill();
+        else respawn.Damage(transform.position);   // espinas: 1 corazon + empuje
     }
 
     // El jugador toca "por arriba" si algun punto de contacto esta en la mitad
