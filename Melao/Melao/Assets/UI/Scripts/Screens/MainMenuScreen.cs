@@ -23,7 +23,14 @@ public class MainMenuScreen : MonoBehaviour
 
     public void OnNewGamePressed()
     {
+        SaveData data = SaveSystem.Load();
+        float music = data.musicVolume;
+        float sfx = data.sfxVolume;
+        bool vib = data.vibration;
+
         SaveSystem.DeleteSave();
+
+        SaveSystem.SaveSettings(music, sfx, vib);
         UIManager.Instance.ShowScreen("Cutscene");
     }
 
