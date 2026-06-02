@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class SettingsScreen : MonoBehaviour
@@ -29,6 +30,24 @@ public class SettingsScreen : MonoBehaviour
         AutoDiscoverAsset();
         LoadSettings();
         ShowPanel("Audio");
+        SetupSliderDuck(musicSlider);
+    }
+
+    private void SetupSliderDuck(Slider slider)
+    {
+        if (slider == null) return;
+        var trigger = slider.GetComponent<EventTrigger>();
+        if (trigger == null) trigger = slider.gameObject.AddComponent<EventTrigger>();
+
+        trigger.triggers.Clear();
+
+        var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        down.callback.AddListener(_ => AudioManager.Instance?.TempUnduck());
+        trigger.triggers.Add(down);
+
+        var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
+        up.callback.AddListener(_ => AudioManager.Instance?.ReDuck());
+        trigger.triggers.Add(up);
     }
 
     private void AutoDiscoverAsset()
@@ -366,6 +385,9 @@ public class SettingsScreen : MonoBehaviour
             try { pendingRebindAction.Enable(); } catch { }
             pendingRebindAction = null;
         }
+        SaveAudioSettings();
+        var player = FindFirstObjectByType<PlayerController2_5D>(FindObjectsInactive.Exclude);
+        if (player != null) player.ReloadOverrides();
     }
 
     private void StartRebindingFor(InputAction action, int bindingIndex, Transform textTransform)
@@ -533,19 +555,21 @@ public class SettingsScreen : MonoBehaviour
     {
         if (AudioManager.Instance != null)
             AudioManager.Instance.SetMusicVolume(value);
+        SaveAudioSettings();
     }
 
     public void OnSFXVolumeChanged(float value)
     {
         if (AudioManager.Instance != null)
             AudioManager.Instance.SetSFXVolume(value);
+        SaveAudioSettings();
     }
 
     // — Control —
 
     public void OnVibrationToggleChanged(bool isOn)
     {
-        PlayerPrefs.SetInt("vibration", isOn ? 1 : 0);
+        SaveAudioSettings();
     }
 
     // — Persistencia —
@@ -587,15 +611,20 @@ public class SettingsScreen : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // — Botón volver —
-
-    public void OnBackPressed()
+    private void SaveAudioSettings()
     {
         SaveSystem.SaveSettings(
             musicSlider != null ? musicSlider.value : 0.8f,
             sfxSlider != null ? sfxSlider.value : 1f,
             vibrationToggle != null && vibrationToggle.isOn
         );
+    }
+
+    // — Botón volver —
+
+    public void OnBackPressed()
+    {
+        SaveAudioSettings();
 
         // RebindingButton ya guardó en PlayerPrefs al reasignar cada tecla.
         // Solo sincronizamos al jugador para que las use de inmediato.

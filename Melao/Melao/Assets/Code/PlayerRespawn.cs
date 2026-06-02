@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 public class PlayerRespawn : MonoBehaviour
@@ -61,6 +62,7 @@ public class PlayerRespawn : MonoBehaviour
         currentLives--;
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(deathSound);
         HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        StartCoroutine(VibrateRoutine());
 
         if (currentLives <= 0)
         {
@@ -106,6 +108,16 @@ public class PlayerRespawn : MonoBehaviour
             rb.isKinematic = false;
 
         isRespawning = false;
+    }
+
+    private System.Collections.IEnumerator VibrateRoutine()
+    {
+        if (!SaveSystem.Load().vibration) yield break;
+        var gp = Gamepad.current;
+        if (gp == null) yield break;
+        gp.SetMotorSpeeds(0.8f, 0.6f);
+        yield return new WaitForSecondsRealtime(0.2f);
+        gp.SetMotorSpeeds(0f, 0f);
     }
 
     private void DoRespawn()

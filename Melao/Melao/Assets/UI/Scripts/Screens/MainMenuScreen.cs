@@ -4,6 +4,14 @@ public class MainMenuScreen : MonoBehaviour
 {
     private const string FirstLevel = "Nivel 4 Choco-Lala";
 
+    [SerializeField] private AudioClip menuMusic;
+
+    private void OnEnable()
+    {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMusic(menuMusic);
+    }
+
     public void OnPlayPressed()
     {
         string last = SaveSystem.GetLastLevel();

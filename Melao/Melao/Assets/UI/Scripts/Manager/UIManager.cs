@@ -44,8 +44,14 @@ public class UIManager : MonoBehaviour
         ShowScreen("MainMenu");
     }
 
+    private static readonly string[] PauseScreens = { "Pause", "Settings", "GameOver", "LevelComplete" };
+
     public void ShowScreen(string screenName)
     {
+        string prevName = currentScreen != null ? GetScreenName(currentScreen) : null;
+        bool prevWasPause = prevName != null && IsPauseScreen(prevName);
+        bool nextIsPause = IsPauseScreen(screenName);
+
         if (currentScreen != null)
             currentScreen.SetActive(false);
 
@@ -69,6 +75,30 @@ public class UIManager : MonoBehaviour
 
         next.SetActive(true);
         currentScreen = next;
+
+        if (nextIsPause && !prevWasPause)
+            AudioManager.Instance?.EnterPause();
+        else if (!nextIsPause && prevWasPause)
+            AudioManager.Instance?.ExitPause();
+    }
+
+    private string GetScreenName(GameObject screen)
+    {
+        if (screen == mainMenuScreen) return "MainMenu";
+        if (screen == pauseScreen) return "Pause";
+        if (screen == settingsScreen) return "Settings";
+        if (screen == gameOverScreen) return "GameOver";
+        if (screen == levelCompleteScreen) return "LevelComplete";
+        if (screen == creditsScreen) return "Credits";
+        if (screen == hud) return "HUD";
+        return null;
+    }
+
+    private bool IsPauseScreen(string name)
+    {
+        foreach (var s in PauseScreens)
+            if (s == name) return true;
+        return false;
     }
 
     public bool IsInGame => currentScreen == hud;

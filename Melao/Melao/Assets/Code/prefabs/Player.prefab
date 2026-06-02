@@ -1524,6 +1524,7 @@ MonoBehaviour:
   dynamicFriction: 0.4
   staticFriction: 0.6
   lockZ: 1
+  jumpSound: {fileID: 8300000, guid: 5718a90a70351054684b9a5572980492, type: 3}
   animator: {fileID: 6444043041597093109}
   jumpTriggerParam: JumpTrig
   wallSlideSpeed: -2
@@ -1616,6 +1617,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialSpawnPoint: {fileID: 0}
+  maxLives: 3
+  deathSound: {fileID: 8300000, guid: 6e4e39db654a5e647851697826a4bcba, type: 3}
   deathFreezeTime: 0.05
   freezeRigidbodyOnDeath: 1
 --- !u!1 &8988863106159147876

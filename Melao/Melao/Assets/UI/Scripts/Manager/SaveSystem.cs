@@ -66,6 +66,7 @@ public static class SaveSystem
         data.sfxVolume   = sfx;
         data.vibration   = vib;
         Save();
+        Debug.Log($"Ajustes guardados: music={music}, sfx={sfx}, vib={vib}");
     }
 
     // — Último nivel cargado (para continuar) —

@@ -344,6 +344,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &28510103
 MonoBehaviour:
@@ -452,6 +453,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!4 &39619762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a06bde16a5c05634bbe9b1e6ac899782, type: 3}
@@ -1602,6 +1604,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!4 &141464426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 337c745d972449b4e93fe2537516094d, type: 3}
@@ -1996,6 +1999,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &189586693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2768,6 +2772,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &238428474
 MeshCollider:
@@ -3626,6 +3631,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &298815401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3909,6 +3915,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &335870529
 MeshCollider:
@@ -4379,6 +4386,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &372525474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4656,6 +4664,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &386225469
 MeshCollider:
@@ -5217,6 +5226,51 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2092539149}
   m_SourcePrefab: {fileID: 100100000, guid: 5d4381143ab059847ac9072abf590a28, type: 3}
+--- !u!1 &423247068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 423247070}
+  - component: {fileID: 423247069}
+  m_Layer: 0
+  m_Name: SceneMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &423247069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423247068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 329dc8339eb8ac3498643a4502fae3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicClip: {fileID: 8300000, guid: 71fab34214c3fb54a8459cd85c08d07a, type: 3}
+--- !u!4 &423247070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423247068}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.3111634, y: 45.765926, z: -15.786388}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &427789317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7feaa2c527c7467468065f7cc52ce3c4, type: 3}
@@ -5692,6 +5746,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &464494043
 MonoBehaviour:
@@ -6603,6 +6658,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &509725766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29d18652463fae84490297560ff6268a, type: 3}
@@ -6672,6 +6728,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &515952995
 MeshCollider:
@@ -7267,6 +7324,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &549080632
 MeshCollider:
@@ -7584,6 +7642,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &583817777
 MeshCollider:
@@ -8903,6 +8962,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &658796762
 MeshCollider:
@@ -9436,6 +9496,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &702175879
 MeshCollider:
@@ -9633,6 +9694,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &722627691
 MeshCollider:
@@ -10052,6 +10114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &740847647
 MonoBehaviour:
@@ -10399,6 +10462,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &765949154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10832,6 +10896,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &785229897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10954,6 +11019,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &791803843
 MonoBehaviour:
@@ -11042,6 +11108,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &795781535
 MonoBehaviour:
@@ -11491,6 +11558,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &814798569
 MonoBehaviour:
@@ -11725,6 +11793,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &820657878
 MeshCollider:
@@ -12310,6 +12379,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &845481487
 MeshCollider:
@@ -12561,6 +12631,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &886836287
 MeshCollider:
@@ -13765,6 +13836,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &965663722
 MeshCollider:
@@ -14002,6 +14074,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &982836322 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -60467368681041815, guid: b10d0cb81d32cdf48b3e1213bc6953ef, type: 3}
@@ -14050,6 +14123,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &983676400
 MeshCollider:
@@ -14457,6 +14531,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &1004628166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26566ba32df861e44b10f2afaa2cef36, type: 3}
@@ -14607,6 +14682,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1007845659
 MeshCollider:
@@ -14756,6 +14832,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1009354486
 MonoBehaviour:
@@ -14849,6 +14926,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1029481542
 MonoBehaviour:
@@ -14957,6 +15035,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!4 &1042474661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
@@ -15166,6 +15245,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1058523451
 MeshCollider:
@@ -15540,6 +15620,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &1073697385 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5d4381143ab059847ac9072abf590a28, type: 3}
@@ -15561,6 +15642,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1073697389
 MeshCollider:
@@ -15622,6 +15704,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1074167007
 MonoBehaviour:
@@ -15948,6 +16031,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &1093231574 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 35e1d420f82f22e4d9319368645aaeb4, type: 3}
@@ -16054,6 +16138,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1098129230
 MeshCollider:
@@ -16135,6 +16220,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &1103533475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16593,6 +16679,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1140417903
 MonoBehaviour:
@@ -16880,6 +16967,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1594319873}
   m_SourcePrefab: {fileID: 100100000, guid: f428bc6ce3bd9bd40a576c8b8535a11e, type: 3}
+--- !u!1 &1153054740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1153054741}
+  m_Layer: 0
+  m_Name: SpawnAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1153054741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153054740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1559911255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155998772 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8335035924812044150, guid: 6a7794bbf18b8e3458526fe4e0f6b4f2, type: 3}
@@ -16938,6 +17056,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &1157662785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26566ba32df861e44b10f2afaa2cef36, type: 3}
@@ -17189,6 +17308,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1172121129
 MeshCollider:
@@ -18020,6 +18140,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1201607030
 MeshCollider:
@@ -18444,6 +18565,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1001 &1254378010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18858,6 +18980,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1268229710
 MeshCollider:
@@ -19194,6 +19317,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1284354348
 MonoBehaviour:
@@ -19437,6 +19561,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1300965430
 MeshCollider:
@@ -19580,6 +19705,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1308848673
 MeshCollider:
@@ -19749,6 +19875,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1313575565
 MeshCollider:
@@ -19860,7 +19987,7 @@ Transform:
   m_GameObject: {fileID: 1319160829}
   serializedVersion: 2
   m_LocalRotation: {x: -0.2088818, y: 0.02972591, z: -0.009012882, w: -0.97744745}
-  m_LocalPosition: {x: -29, y: 34.88, z: -6.669}
+  m_LocalPosition: {x: -29, y: 35.88, z: -8.669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20107,6 +20234,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1350084542
 MeshCollider:
@@ -20151,6 +20279,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1352822906
 MeshCollider:
@@ -20195,6 +20324,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1353355465
 MeshCollider:
@@ -21204,6 +21334,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1412842362
 MeshCollider:
@@ -21253,6 +21384,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1413122351
 MonoBehaviour:
@@ -21592,6 +21724,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1438773331
 MeshCollider:
@@ -21864,6 +21997,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a06bde16a5c05634bbe9b1e6ac899782, type: 3}
   m_PrefabInstance: {fileID: 109271714}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1447793311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1447793312}
+  m_Layer: 7
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1447793312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447793311}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.26, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 628289742010895893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1448951983 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a06bde16a5c05634bbe9b1e6ac899782, type: 3}
@@ -22119,6 +22283,74 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1058523450}
   m_SourcePrefab: {fileID: 100100000, guid: 5d4381143ab059847ac9072abf590a28, type: 3}
+--- !u!1 &1472544831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1472544834}
+  - component: {fileID: 1472544833}
+  - component: {fileID: 1472544832}
+  m_Layer: 0
+  m_Name: LevelEndTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1472544832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472544831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc147cd0ab7e8f840957bc8e8b886cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextLevelName: Nivel 2 Mas-melito
+  currentLevelName: 
+--- !u!65 &1472544833
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472544831}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1472544834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472544831}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.92, y: 52.94, z: -1.6}
+  m_LocalScale: {x: 1, y: 5.253817, z: 4.1807}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1473984002 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5d4381143ab059847ac9072abf590a28, type: 3}
@@ -22140,6 +22372,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1473984006
 MeshCollider:
@@ -22781,6 +23014,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1515988329
 MeshCollider:
@@ -22825,6 +23059,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1517744908
 MeshCollider:
@@ -22874,6 +23109,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1518784137
 MonoBehaviour:
@@ -23003,6 +23239,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!4 &1526684936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a06bde16a5c05634bbe9b1e6ac899782, type: 3}
@@ -23372,6 +23609,78 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 432047264}
   m_SourcePrefab: {fileID: 100100000, guid: 7feaa2c527c7467468065f7cc52ce3c4, type: 3}
+--- !u!1 &1559911252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1559911255}
+  - component: {fileID: 1559911254}
+  - component: {fileID: 1559911253}
+  m_Layer: 0
+  m_Name: CheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1559911253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559911252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca3479ebcfc5873c789d787ec4465b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  respawnAnchor: {fileID: 1153054741}
+  oneShot: 1
+--- !u!65 &1559911254
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559911252}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1559911255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559911252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.4, y: 52.71, z: -1.31}
+  m_LocalScale: {x: 1, y: 4.8156, z: 5.263602}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1153054741}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1563563466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23498,6 +23807,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1565699907
 MonoBehaviour:
@@ -24063,6 +24373,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1597538765
 MeshCollider:
@@ -24107,6 +24418,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1597716789
 MeshCollider:
@@ -24317,6 +24629,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1626445721
 MeshCollider:
@@ -24477,6 +24790,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1633955166
 MonoBehaviour:
@@ -24553,6 +24867,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1640892193
 MeshCollider:
@@ -24753,6 +25068,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1660852545
 MeshCollider:
@@ -24797,6 +25113,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1663059077
 MeshCollider:
@@ -24987,6 +25304,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1677522369
 MeshCollider:
@@ -25068,6 +25386,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1684112112
 MeshCollider:
@@ -25165,6 +25484,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1685944509
 MeshCollider:
@@ -25241,6 +25561,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1697243503
 MeshCollider:
@@ -26417,6 +26738,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1775489200
 MeshCollider:
@@ -26598,6 +26920,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &1791296795
 GameObject:
   m_ObjectHideFlags: 0
@@ -26868,6 +27191,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1804163819
 MeshCollider:
@@ -26912,6 +27236,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1813431501
 MeshCollider:
@@ -27057,6 +27382,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1822016244
 MeshCollider:
@@ -27728,6 +28054,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1875869107
 MeshCollider:
@@ -27919,6 +28246,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1892450932
 MeshCollider:
@@ -27963,6 +28291,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1898507143
 MeshCollider:
@@ -28268,6 +28597,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1921228285
 MeshCollider:
@@ -28524,6 +28854,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1942196032
 MeshCollider:
@@ -29032,6 +29363,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &1960731070
 MonoBehaviour:
@@ -29325,6 +29657,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1976633028
 MeshCollider:
@@ -29476,6 +29809,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1983207444
 MeshCollider:
@@ -29595,6 +29929,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1995802645
 MeshCollider:
@@ -29639,6 +29974,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &1997783066
 MeshCollider:
@@ -29786,6 +30122,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &2017479076
 MeshCollider:
@@ -30399,6 +30736,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!4 &2053858455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d7d0a3bb1b8635242b9c8dedd8d22147, type: 3}
@@ -30705,6 +31043,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &2076813047
 MeshCollider:
@@ -30976,6 +31315,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &2080675970
 MonoBehaviour:
@@ -31068,6 +31408,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &2083413058
 MeshCollider:
@@ -31112,6 +31453,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &2092539150
 MeshCollider:
@@ -31161,6 +31503,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!114 &2096573715
 MonoBehaviour:
@@ -31290,6 +31633,7 @@ MonoBehaviour:
   colorActive: {r: 1, g: 0.1, b: 0.35, a: 1}
   widthWarning: 0.18
   widthActive: 0.7
+  warningSound: {fileID: 0}
 --- !u!1 &2103649716 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2711328419397675742, guid: 337c745d972449b4e93fe2537516094d, type: 3}
@@ -31767,6 +32111,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   alsoUseTag: 1
+  onlyKillFromTop: 0
   retriggerCooldown: 0.25
 --- !u!64 &2136603069
 MeshCollider:
@@ -31951,6 +32296,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1401529320583756474, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6e4e39db654a5e647851697826a4bcba, type: 3}
+    - target: {fileID: 1401529320583756474, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
+      propertyPath: initialSpawnPoint
+      value: 
+      objectReference: {fileID: 1447793312}
     - target: {fileID: 4444871503603905841, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
       propertyPath: cameraRef
       value: 
@@ -31995,13 +32348,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4945288902193483622, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
+      propertyPath: jumpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5718a90a70351054684b9a5572980492, type: 3}
     - target: {fileID: 8861242392177912162, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4882482306367166317, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1447793312}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e1b5ed20725d5a49ad58d8e8649f5fe, type: 3}
 --- !u!1001 &8215728936871389965
@@ -32022,11 +32382,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2032017053693307318, guid: e1516eade1976c643b28fe1d189fd842, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 34.88
+      value: 35.88
       objectReference: {fileID: 0}
     - target: {fileID: 2032017053693307318, guid: e1516eade1976c643b28fe1d189fd842, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.669
+      value: -8.669
       objectReference: {fileID: 0}
     - target: {fileID: 2032017053693307318, guid: e1516eade1976c643b28fe1d189fd842, type: 3}
       propertyPath: m_LocalRotation.w
@@ -32074,3 +32434,6 @@ SceneRoots:
   - {fileID: 1445511344}
   - {fileID: 5316098652826681710}
   - {fileID: 8215728936871389965}
+  - {fileID: 1559911255}
+  - {fileID: 1472544834}
+  - {fileID: 423247070}
