@@ -18,6 +18,8 @@ public class HUDController : MonoBehaviour
     [Header("Power Up")]
     [SerializeField] private Image powerUpIcon;
     [SerializeField] private GameObject powerUpEmptySlot;
+    [Tooltip("Overlay radial que muestra el enfriamiento del power-up seleccionado.")]
+    [SerializeField] private Image powerUpCooldown;
     [SerializeField] private TMP_Text powerUpNameText;
     [SerializeField] private Color emptySlotColor = new Color(0, 0, 0, 0.4f);
     [SerializeField] private Color filledSlotColor = new Color(0.3f, 0.3f, 0.3f, 0.6f);
@@ -104,6 +106,27 @@ public class HUDController : MonoBehaviour
         if (powerUpIcon != null)
         {
             powerUpIcon.gameObject.SetActive(icon != null);
+        if (powerUpEmptySlot != null)
+            powerUpEmptySlot.SetActive(icon == null);
+        if (icon != null && powerUpIcon != null)
+            powerUpIcon.sprite = icon;
+
+        // El overlay de cooldown usa el mismo sprite (barrido radial sobre el icono).
+        if (powerUpCooldown != null)
+        {
+            powerUpCooldown.sprite = icon;
+            powerUpCooldown.gameObject.SetActive(false);
+        }
+    }
+
+    // fraction01: 1 = recien usado (cubierto), 0 = listo. La llama PowerUpController.
+    public void UpdatePowerUpCooldown(float fraction01)
+    {
+        if (powerUpCooldown == null) return;
+        bool show = fraction01 > 0.001f && powerUpCooldown.sprite != null;
+        if (powerUpCooldown.gameObject.activeSelf != show)
+            powerUpCooldown.gameObject.SetActive(show);
+        if (show) powerUpCooldown.fillAmount = fraction01;
             if (icon != null) powerUpIcon.sprite = icon;
         }
 
@@ -152,6 +175,28 @@ public class HUDController : MonoBehaviour
             iconRt.anchorMax = new Vector2(0.5f, 0.5f);
             iconRt.pivot = new Vector2(0.5f, 0.5f);
             iconRt.sizeDelta = new Vector2(40, 40);
+        }
+
+        // Overlay de enfriamiento: barrido radial oscuro sobre el icono.
+        if (powerUpCooldown == null)
+        {
+            var coGo = new GameObject("PowerUpCooldown", typeof(RectTransform), typeof(Image));
+            coGo.transform.SetParent(powerUpEmptySlot.transform, false);
+            powerUpCooldown = coGo.GetComponent<Image>();
+            powerUpCooldown.color = new Color(0f, 0f, 0f, 0.6f);
+            powerUpCooldown.raycastTarget = false;
+            powerUpCooldown.type = Image.Type.Filled;
+            powerUpCooldown.fillMethod = Image.FillMethod.Radial360;
+            powerUpCooldown.fillOrigin = (int)Image.Origin360.Top;
+            powerUpCooldown.fillClockwise = false;
+            powerUpCooldown.preserveAspect = true;
+
+            var coRt = powerUpCooldown.rectTransform;
+            coRt.anchorMin = new Vector2(0.5f, 0.5f);
+            coRt.anchorMax = new Vector2(0.5f, 0.5f);
+            coRt.pivot = new Vector2(0.5f, 0.5f);
+            coRt.sizeDelta = new Vector2(40, 40);
+            coGo.SetActive(false);
         }
 
         if (powerUpNameText == null)

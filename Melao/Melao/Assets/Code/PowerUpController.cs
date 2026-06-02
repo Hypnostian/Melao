@@ -55,6 +55,8 @@ public class PowerUpController : MonoBehaviour
     private readonly Dictionary<PowerUpType, int> counts = new Dictionary<PowerUpType, int>();
     // Momento (Time.time) en que cada tipo vuelve a estar disponible.
     private readonly Dictionary<PowerUpType, float> readyAt = new Dictionary<PowerUpType, float>();
+    // Duracion total del ultimo cooldown por tipo (para el barrido del HUD).
+    private readonly Dictionary<PowerUpType, float> cooldownTotal = new Dictionary<PowerUpType, float>();
     private int currentIndex = -1;
 
     private PlayerRespawn respawn;
@@ -146,7 +148,7 @@ public class PowerUpController : MonoBehaviour
             case PowerUpType.Cuquis:
                 if (OnCooldown(type)) return;          // 1 cada 3s
                 FireCuqui();
-                readyAt[type] = Time.time + cuquiCooldown;
+                StartCooldown(type, cuquiCooldown);
                 break;                                  // ilimitado: NO se consume
 
             case PowerUpType.Heart:
@@ -157,13 +159,13 @@ public class PowerUpController : MonoBehaviour
             case PowerUpType.Chips:
                 if (OnCooldown(type) || sizeMod == null) return;
                 sizeMod.ApplySmall(chipsDuration);
-                readyAt[type] = Time.time + chipsDuration + chipsCooldown; // efecto + espera
+                StartCooldown(type, chipsDuration + chipsCooldown); // efecto + espera
                 break;                                  // reutilizable: NO se consume
 
             case PowerUpType.Merengue:
                 if (OnCooldown(type) || sizeMod == null) return;
                 sizeMod.ApplyBig(merengueDuration);
-                readyAt[type] = Time.time + merengueDuration + merengueCooldown;
+                StartCooldown(type, merengueDuration + merengueCooldown);
                 break;                                  // reutilizable: NO se consume
         }
     }
@@ -201,6 +203,26 @@ public class PowerUpController : MonoBehaviour
             currentIndex = owned.Count == 0 ? -1 : Mathf.Clamp(currentIndex, 0, owned.Count - 1);
         }
         UpdateHUD();
+    }
+
+    private void StartCooldown(PowerUpType type, float duration)
+    {
+        readyAt[type] = Time.time + duration;
+        cooldownTotal[type] = Mathf.Max(0.01f, duration);
+    }
+
+    private void Update()
+    {
+        // Alimenta el barrido de enfriamiento del HUD del power-up seleccionado.
+        var cur = Current;
+        float frac = 0f;
+        if (cur != null && readyAt.TryGetValue(cur.Value, out float ready))
+        {
+            float remaining = ready - Time.time;
+            if (remaining > 0f && cooldownTotal.TryGetValue(cur.Value, out float total) && total > 0f)
+                frac = Mathf.Clamp01(remaining / total);
+        }
+        HUDController.Instance?.UpdatePowerUpCooldown(frac);
     }
 
     // -----------------------------------------------------------------

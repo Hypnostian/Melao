@@ -79,22 +79,33 @@ public static class PowerUpSetupTool
         var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbxPath);
         if (model == null) { Debug.LogWarning($"[PowerUpSetup] No se encontro {fbxPath}"); return false; }
 
-        var inst = (GameObject)PrefabUtility.InstantiatePrefab(model);
-        if (inst == null) return false;
-        inst.transform.position = Vector3.zero;
-        inst.transform.rotation = Quaternion.identity;
+        var modelInst = (GameObject)PrefabUtility.InstantiatePrefab(model);
+        if (modelInst == null) return false;
 
-        // Collider TRIGGER ajustado a la malla.
-        FitBoxTrigger(inst);
+        // Root con el pivote en el CENTRO VISUAL del modelo. Asi, al girar (Y),
+        // el power-up rota EN SU SITIO y no "orbita" raro aunque el FBX tenga el
+        // pivote descentrado (era el caso de Chips/GCHIPBIG).
+        var root = new GameObject(d.shortName + "_PowerUp");
+        modelInst.transform.SetParent(root.transform, false);
+        modelInst.transform.localPosition = Vector3.zero;
+        modelInst.transform.localRotation = Quaternion.identity;
 
-        // Componente de recoleccion con su tipo.
-        var pickup = inst.GetComponent<PowerUpPickup>();
-        if (pickup == null) pickup = inst.AddComponent<PowerUpPickup>();
+        var rends = modelInst.GetComponentsInChildren<Renderer>(true);
+        if (rends.Length > 0)
+        {
+            Bounds wb = rends[0].bounds;
+            for (int i = 1; i < rends.Length; i++) wb.Encapsulate(rends[i].bounds);
+            // Desplazar el modelo para que su centro quede en el origen del root.
+            modelInst.transform.localPosition -= root.transform.InverseTransformPoint(wb.center);
+        }
+
+        FitBoxTrigger(root);                 // collider trigger centrado en el root
+        var pickup = root.AddComponent<PowerUpPickup>();
         pickup.type = d.type;
 
         string prefabPath = $"{PREFAB_DIR}/{d.shortName}_PowerUp.prefab";
-        PrefabUtility.SaveAsPrefabAsset(inst, prefabPath);
-        Object.DestroyImmediate(inst);
+        PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+        Object.DestroyImmediate(root);
         return true;
     }
 

@@ -26,6 +26,12 @@ public class EnemyBase : MonoBehaviour
     [Tooltip("Layers de suelo/pared para detectar borde, pared y hacer snap.")]
     public LayerMask groundLayer = (1 << 8) | (1 << 9) | (1 << 10);
 
+    [Header("Evitar otros enemigos")]
+    [Tooltip("Si esta activo, al detectar otro enemigo cerca EN SU CAMINO, se voltea y se va al otro lado (no se amontonan ni siguen el mismo camino).")]
+    public bool avoidOtherEnemies = true;
+    [Tooltip("Distancia horizontal a la que detecta a otro enemigo adelante.")]
+    public float enemyAvoidDistance = 1.3f;
+
     [Header("Orientacion")]
     [Tooltip("Si esta activo, el enemigo gira para mirar hacia su direccion de avance.")]
     public bool faceMovement = true;
@@ -59,6 +65,12 @@ public class EnemyBase : MonoBehaviour
     [Tooltip("Segundos antes de destruir el GameObject tras morir.")]
     public float destroyDelay = 1.2f;
 
+    [Header("Feedback de daño")]
+    [Tooltip("Parpadeo en rojo al recibir un golpe. Hace claro que el golpe acerto (util en enemigos de varios golpes como Rita).")]
+    public bool flashOnHit = true;
+    public Color hitFlashColor = new Color(1f, 0.2f, 0.2f, 1f);
+    public float hitFlashDuration = 0.14f;
+
     // --- runtime ---
     protected Animator animator;
     protected Rigidbody rb;
@@ -73,6 +85,11 @@ public class EnemyBase : MonoBehaviour
 
     private HashSet<string> animParams;
     private float lastStompTime = -999f;
+    private float avoidCooldown;
+
+    // Registro global de enemigos vivos, para que se detecten entre si sin
+    // depender de layers (los enemigos quedan en Default).
+    private static readonly List<EnemyBase> ActiveEnemies = new List<EnemyBase>();
 
     protected virtual void Awake()
     {
@@ -88,6 +105,16 @@ public class EnemyBase : MonoBehaviour
         authoredPos = transform.position;
 
         CacheAnimParams();
+    }
+
+    protected virtual void OnEnable()
+    {
+        if (!ActiveEnemies.Contains(this)) ActiveEnemies.Add(this);
+    }
+
+    protected virtual void OnDisable()
+    {
+        ActiveEnemies.Remove(this);
     }
 
     protected virtual void Start()
@@ -139,10 +166,14 @@ public class EnemyBase : MonoBehaviour
             return;
         }
 
+        if (avoidCooldown > 0f) avoidCooldown -= Time.deltaTime;
+
         // Pared adelante -> girar.
         if (WallAhead()) dir = -dir;
         // Borde adelante (no hay suelo) -> girar.
         else if (turnAtLedges && LedgeAhead()) dir = -dir;
+        // Otro enemigo en mi camino -> voltearme y irme al otro lado.
+        else if (avoidCooldown <= 0f && OtherEnemyAhead()) { dir = -dir; avoidCooldown = 0.6f; }
 
         Vector3 target = authoredPos + Vector3.right * dir * patrolSpeed * Time.deltaTime;
         target = ApplyGroundSnap(target);
@@ -181,6 +212,26 @@ public class EnemyBase : MonoBehaviour
         return target;
     }
 
+    // ¿Hay otro enemigo cerca, ADELANTE (en mi 'dir') y a una altura similar?
+    // Si el otro viene de frente, ambos detectan y ambos se voltean -> se separan.
+    // Si uno sigue al otro, solo el de atras lo ve adelante y se voltea.
+    protected bool OtherEnemyAhead()
+    {
+        if (!avoidOtherEnemies) return false;
+        Vector3 p = transform.position;
+        for (int i = 0; i < ActiveEnemies.Count; i++)
+        {
+            var e = ActiveEnemies[i];
+            if (e == null || e == this || e.dead) continue;
+            float dx = e.transform.position.x - p.x;
+            if (Mathf.Abs(dx) > enemyAvoidDistance) continue;       // no esta cerca en X
+            if ((dx >= 0f ? 1 : -1) != dir) continue;               // no esta adelante
+            if (Mathf.Abs(e.transform.position.y - p.y) > 1.5f) continue; // otra plataforma
+            return true;
+        }
+        return false;
+    }
+
     protected bool WallAhead()
     {
         Bounds b = bodyCol.bounds;
@@ -209,7 +260,11 @@ public class EnemyBase : MonoBehaviour
     // -----------------------------------------------------------------
     protected void AcquirePlayer()
     {
-        var go = GameObject.FindGameObjectWithTag("Player");
+        // Buscar al jugador REAL por su componente PlayerController2_5D (no por tag).
+        // Asi un enemigo NUNCA confunde a OTRO enemigo (ni a un objeto suelto con
+        // tag "Player") con Pops -> no le dispara/persigue.
+        var pc = FindFirstObjectByType<PlayerController2_5D>();
+        GameObject go = pc != null ? pc.gameObject : GameObject.FindGameObjectWithTag("Player");
         if (go == null) return;
         player = go.transform;
         playerRespawn = go.GetComponentInParent<PlayerRespawn>();
@@ -298,15 +353,59 @@ public class EnemyBase : MonoBehaviour
     {
         if (playerRespawn == null && player != null)
             playerRespawn = player.GetComponentInParent<PlayerRespawn>();
-        if (playerRespawn != null) playerRespawn.Kill();
+        // Los enemigos solo restan 1 corazon (con empuje + invulnerabilidad), no
+        // matan de golpe ni teletransportan: Pops sigue jugando.
+        if (playerRespawn != null) playerRespawn.Damage(transform.position);
     }
 
     public virtual void TakeHit(int amount)
     {
         if (dead) return;
         health -= amount;
+        FlashDamage();              // feedback: parpadeo rojo (golpe acertado)
         if (health <= 0) Die();
         else OnHurt();
+    }
+
+    // -----------------------------------------------------------------
+    //   FLASH DE DAÑO (parpadeo rojo)
+    // -----------------------------------------------------------------
+    private Renderer[] flashRenderers;
+    private MaterialPropertyBlock flashBlock;
+    private Coroutine flashCo;
+
+    protected void FlashDamage()
+    {
+        if (!flashOnHit) return;
+        if (flashRenderers == null) flashRenderers = GetComponentsInChildren<Renderer>(true);
+        if (flashBlock == null) flashBlock = new MaterialPropertyBlock();
+        if (flashCo != null) StopCoroutine(flashCo);
+        flashCo = StartCoroutine(FlashRoutine());
+    }
+
+    private System.Collections.IEnumerator FlashRoutine()
+    {
+        SetFlash(true);
+        yield return new WaitForSeconds(hitFlashDuration);
+        SetFlash(false);
+    }
+
+    private void SetFlash(bool on)
+    {
+        if (flashRenderers == null) return;
+        for (int i = 0; i < flashRenderers.Length; i++)
+        {
+            var r = flashRenderers[i];
+            if (r == null) continue;
+            if (on)
+            {
+                r.GetPropertyBlock(flashBlock);
+                flashBlock.SetColor("_BaseColor", hitFlashColor);
+                flashBlock.SetColor("_Color", hitFlashColor);
+                r.SetPropertyBlock(flashBlock);
+            }
+            else r.SetPropertyBlock(null);   // limpia el override -> color original
+        }
     }
 
     protected virtual void Die()

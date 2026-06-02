@@ -81,7 +81,7 @@ public static class QuiptoSetupTool
     {
         SetLayer(go, LAYER_DEFAULT);
         Colliders(go, true, true);
-        foreach (var h in Hosts<HazardKill>(go, false)) Hazard(h);
+        foreach (var h in Hosts<HazardKill>(go, false)) Hazard(h, lethal: false); // espinas: 1 corazon + empuje
     }
 
     private static void SetGround(GameObject go, int layer)
@@ -102,7 +102,7 @@ public static class QuiptoSetupTool
         SetLayer(go, LAYER_CHANGUA);
         AddLiquidTrigger(go);
         var h = go.GetComponent<HazardKill>(); if (h == null) h = Undo.AddComponent<HazardKill>(go);
-        Hazard(h);
+        Hazard(h, lethal: true);   // arequipe (rio): mortal, respawn en checkpoint
         // Olas en cada malla + Read/Write del mesh fuente.
         foreach (var mf in go.GetComponentsInChildren<MeshFilter>(true))
         {
@@ -148,8 +148,8 @@ public static class QuiptoSetupTool
                                Mathf.Max(wb.size.z, 0.5f) / Mathf.Max(1e-4f, Mathf.Abs(s.z)));
     }
 
-    private static void Hazard(HazardKill h)
-    { Undo.RecordObject(h, "Hazard"); h.onlyKillFromTop = false; h.playerLayer = 1 << LAYER_PLAYER; EditorUtility.SetDirty(h); }
+    private static void Hazard(HazardKill h, bool lethal)
+    { Undo.RecordObject(h, "Hazard"); h.onlyKillFromTop = false; h.lethal = lethal; h.playerLayer = 1 << LAYER_PLAYER; EditorUtility.SetDirty(h); }
 
     private static void Collect(Transform t, List<GameObject> bag)
     { bag.Add(t.gameObject); for (int i = 0; i < t.childCount; i++) Collect(t.GetChild(i), bag); }

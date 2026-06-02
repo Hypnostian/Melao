@@ -1624,6 +1624,9 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 6e4e39db654a5e647851697826a4bcba, type: 3}
   deathFreezeTime: 0.05
   freezeRigidbodyOnDeath: 1
+  invulnDuration: 1
+  knockbackForce: 4
+  knockbackUp: 2.5
 --- !u!114 &6625657710964010433
 MonoBehaviour:
   m_ObjectHideFlags: 0
