@@ -161,13 +161,22 @@ public class PlayerRespawn : MonoBehaviour
         else StartCoroutine(RespawnRoutine());
     }
 
-    // Recupera vidas (power-up Heart). No supera maxLives. Devuelve true si
-    // realmente curo (estaba por debajo del maximo).
     public bool GainLife(int amount = 1)
     {
-        if (amount <= 0 || currentLives >= maxLives) return false;
-        currentLives = Mathf.Min(maxLives, currentLives + amount);
-        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        if (amount <= 0) return false;
+
+        if (currentLives >= maxLives)
+        {
+            maxLives++;
+            currentLives = maxLives;
+            HUDController.Instance?.AddHeartSlot();
+            HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        }
+        else
+        {
+            currentLives = Mathf.Min(maxLives, currentLives + amount);
+            HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        }
         return true;
     }
 

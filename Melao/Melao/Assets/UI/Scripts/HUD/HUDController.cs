@@ -101,6 +101,29 @@ public class HUDController : MonoBehaviour
         InitHearts(4, currentHearts);
     }
 
+    public void AddHeartSlot()
+    {
+        EnsureHeartsContainer();
+        if (heartsContainer == null) return;
+
+        GameObject heart;
+        if (heartPrefab != null)
+            heart = Instantiate(heartPrefab, heartsContainer);
+        else
+        {
+            heart = new GameObject("Heart", typeof(Image));
+            heart.transform.SetParent(heartsContainer, false);
+            var rt = heart.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(24, 24);
+        }
+
+        Image img = heart.GetComponent<Image>();
+        if (img == null) img = heart.AddComponent<Image>();
+        if (heartImages.Count == 3 && heartExtra != null)
+            img.sprite = heartExtra;
+        heartImages.Add(img);
+    }
+
     public void UpdatePowerUp(Sprite icon, bool hasPowerUp = false, PowerUpType type = PowerUpType.Cuquis)
     {
         if (powerUpIcon != null)
