@@ -106,28 +106,13 @@ public class HUDController : MonoBehaviour
         if (powerUpIcon != null)
         {
             powerUpIcon.gameObject.SetActive(icon != null);
-        if (powerUpEmptySlot != null)
-            powerUpEmptySlot.SetActive(icon == null);
-        if (icon != null && powerUpIcon != null)
-            powerUpIcon.sprite = icon;
+            if (icon != null) powerUpIcon.sprite = icon;
+        }
 
-        // El overlay de cooldown usa el mismo sprite (barrido radial sobre el icono).
         if (powerUpCooldown != null)
         {
             powerUpCooldown.sprite = icon;
             powerUpCooldown.gameObject.SetActive(false);
-        }
-    }
-
-    // fraction01: 1 = recien usado (cubierto), 0 = listo. La llama PowerUpController.
-    public void UpdatePowerUpCooldown(float fraction01)
-    {
-        if (powerUpCooldown == null) return;
-        bool show = fraction01 > 0.001f && powerUpCooldown.sprite != null;
-        if (powerUpCooldown.gameObject.activeSelf != show)
-            powerUpCooldown.gameObject.SetActive(show);
-        if (show) powerUpCooldown.fillAmount = fraction01;
-            if (icon != null) powerUpIcon.sprite = icon;
         }
 
         if (powerUpNameText != null)
@@ -139,6 +124,16 @@ public class HUDController : MonoBehaviour
         var slotImg = powerUpEmptySlot?.GetComponent<Image>();
         if (slotImg == null) return;
         slotImg.color = icon != null || hasPowerUp ? filledSlotColor : emptySlotColor;
+    }
+
+    // fraction01: 1 = recien usado (cubierto), 0 = listo. La llama PowerUpController.
+    public void UpdatePowerUpCooldown(float fraction01)
+    {
+        if (powerUpCooldown == null) return;
+        bool show = fraction01 > 0.001f && powerUpCooldown.sprite != null;
+        if (powerUpCooldown.gameObject.activeSelf != show)
+            powerUpCooldown.gameObject.SetActive(show);
+        if (show) powerUpCooldown.fillAmount = fraction01;
     }
 
     private void EnsurePowerUpUI()
