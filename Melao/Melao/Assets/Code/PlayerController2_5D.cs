@@ -25,7 +25,7 @@ public class PlayerController2_5D : MonoBehaviour
     [SerializeField] private float wallCheckDistance = 0.35f;
     [SerializeField] private float wallJumpUpForce = 4.5f;
     [SerializeField] private float wallJumpSideForce = 6.5f;
-    [SerializeField] private float wallGraceTime = 0.04f;
+    [SerializeField] private float wallGraceTime = 0.1f;
     [SerializeField] private LayerMask wallLayer;
 
     [Tooltip("Tiempo tras un wall jump en el que el input horizontal se ignora. Hace que la trayectoria del wall jump se sienta comprometida y evita que el jugador anule su propio empuje.")]
@@ -71,6 +71,8 @@ public class PlayerController2_5D : MonoBehaviour
 
     private Rigidbody rb;
     private CapsuleCollider capsule;
+    private PhysicsMaterial playerMat;
+    private bool frictionGrounded = true;
     private Vector2 moveInput;
     private bool jumpPressed;
     private PlayerControls playerControls;
@@ -98,20 +100,34 @@ public class PlayerController2_5D : MonoBehaviour
     // hacia camara mientras esta en el aire).
     public bool IsGrounded => isGrounded;
 
+    // Multiplicador de velocidad horizontal aplicado por sistemas externos
+    // (ej. StickyFloor del Arequipe pegajoso). 1 = velocidad normal.
+    [HideInInspector] public float externalSpeedMultiplier = 1f;
+
+    // Empuje horizontal externo (unidades/seg) que se SUMA a la velocidad
+    // objetivo. Usado por SeesawPlatform para deslizar al jugador hacia el lado
+    // bajo. Se puede contrarrestar caminando en contra. 0 = sin empuje.
+    [HideInInspector] public float externalPushX = 0f;
+
+    // Impulso vertical EXTRA al saltar (lo da p.ej. SeesawPlatform). 0 = normal.
+    [HideInInspector] public float externalJumpBoost = 0f;
+
 void Awake()
 {
     rb = GetComponent<Rigidbody>();
     capsule = GetComponent<CapsuleCollider>();
 
-    // PhysicsMaterial con friccion REAL: evita resbalon infinito en pendientes
-    // (queso, puente) cuando el jugador no presiona nada. El anti-pegado en
-    // paredes laterales se maneja con el wallStickCounter / wall slide, no
-    // dependemos de friccion cero.
-    PhysicsMaterial playerMat = new PhysicsMaterial("PlayerMaterial");
-    playerMat.dynamicFriction = dynamicFriction;
-    playerMat.staticFriction = staticFriction;
-    playerMat.frictionCombine = PhysicsMaterialCombine.Average;
+    // PhysicsMaterial con friccion DINAMICA (ver UpdateFriction):
+    //  - En el suelo: friccion real -> no resbala en pendientes (queso, puente).
+    //  - En el aire: friccion CERO -> NO se pega a paredes/plataformas al
+    //    empujar contra ellas (cae directo). Combine = Minimum para que el 0
+    //    domine y nunca se quede pegado.
+    playerMat = new PhysicsMaterial("PlayerMaterial");
+    playerMat.frictionCombine = PhysicsMaterialCombine.Minimum;
     playerMat.bounceCombine = PhysicsMaterialCombine.Minimum;
+    playerMat.dynamicFriction = dynamicFriction; // estado inicial (suelo)
+    playerMat.staticFriction = staticFriction;
+    frictionGrounded = true;
     capsule.sharedMaterial = playerMat;
 
     if (groundCheck == null)
@@ -162,19 +178,28 @@ void Awake()
     void Update()
     {
 
-        // Ground check direccional: SphereCast hacia ABAJO en vez de CheckSphere.
-        // CheckSphere daba true por overlap en cualquier direccion -> rozar el
-        // costado de un Pingu lo registraba como suelo y permitia saltos
-        // infinitos quedandose flotando contra el costado.
+        // --- DETECCION DE PARED (multi-altura, robusta) ---
+        // Varios rayos a lo largo del capsule para detectar la pared de forma
+        // fiable tanto si el jugador esta alto (cerca del tope) como bajo. NO se
+        // lanzan rayos por debajo de los pies, para no dar falso positivo cuando
+        // el jugador esta PARADO ENCIMA de una pared fina.
+        touchingWallLeft  = CheckWall(Vector3.left);
+        touchingWallRight = CheckWall(Vector3.right);
+        bool touchingAnyWall = touchingWallLeft || touchingWallRight;
+
+        // --- GROUND CHECK direccional (SphereCast hacia abajo vs Ground|Platform) ---
         int combinedLayers = groundLayer | platformLayer;
         Vector3 castOrigin = groundCheck.position + Vector3.up * 0.15f;
         float castRadius = Mathf.Max(0.05f, groundCheckRadius * 0.85f);
-        float castDist = 0.3f;
         isGrounded = Physics.SphereCast(castOrigin, castRadius, Vector3.down, out _,
-                                        castDist, combinedLayers, QueryTriggerInteraction.Ignore);
+                                        0.3f, combinedLayers, QueryTriggerInteraction.Ignore);
 
-        // Caso especial: estar parado sobre la CIMA de una pared (ej. Choquito).
-        if (!isGrounded)
+        // Parado sobre la CIMA de una pared (Choquito): SOLO si NO estamos
+        // pegados a una pared por el lado. Esto elimina el estado ambiguo
+        // "grounded + touchingWall" que bugueaba el wall jump cerca del tope:
+        //   - al lado de la pared (touchingWall) -> NO grounded -> wall jump.
+        //   - genuinamente encima (sin contacto lateral) -> grounded -> salto normal.
+        if (!isGrounded && !touchingAnyWall)
         {
             Vector3 rayOrigin = groundCheck.position + Vector3.up * 0.05f;
             float rayLen = groundCheckRadius + 0.15f;
@@ -182,28 +207,22 @@ void Awake()
                 isGrounded = true;
         }
 
+        // Friccion dinamica: con suelo = friccion (no resbala en pendientes);
+        // en el aire = cero (no se pega a paredes/plataformas al empujar).
+        UpdateFriction(isGrounded);
+
         if (isGrounded)
         {
             lastTimeGrounded = Time.time;
             // Al pisar suelo, se reactiva el wall jump en cualquier lado.
             lastWallSideJumpedFrom = 0;
-            // Al aterrizar, cancelar el lockout de input post-wall-jump. Si
-            // aterrizas mientras todavia esta activo, el input se mutea y la
-            // muñeca se queda quieta en el corner sin poder caminar.
+            // Al aterrizar, cancelar el lockout de input post-wall-jump.
             wallJumpLockoutTimer = 0f;
         }
 
-        // Wall raycast SIEMPRE (no solo en aire) para que la animacion
-        // de caminata se suprima si estamos empujando contra una pared en el piso.
-        Vector3 wallOrigin = transform.position + Vector3.up * (capsule.height * 0.4f);
-        touchingWallLeft = Physics.Raycast(wallOrigin, Vector3.left, wallCheckDistance, wallLayer);
-        touchingWallRight = Physics.Raycast(wallOrigin, Vector3.right, wallCheckDistance, wallLayer);
-
-        // Logica de slide/grace solo aplica si NO esta en el suelo.
-        // lastTimeOnWall siempre se actualiza al tocar pared (para el grace del
-        // wall jump). PERO el wallStickCounter solo se refilla si el jugador
-        // esta presionando INTO la pared: si no aprieta, no se pega — cae normal.
-        if (!isGrounded && (touchingWallLeft || touchingWallRight))
+        // Grace del wall jump + stick (solo en aire). lastTimeOnWall se refresca
+        // mientras toquemos pared; el stick solo si el jugador presiona INTO.
+        if (!isGrounded && touchingAnyWall)
         {
             lastTimeOnWall = Time.time;
 
@@ -232,8 +251,9 @@ void Awake()
         // Durante el lockout post-wall-jump, ignoramos input para que la
         // trayectoria del wall jump no se anule pulsando contra la pared y
         // tampoco se mate por el wall slide.
+        bool inLockout = wallJumpLockoutTimer > 0f;
         float effectiveInputX = moveInput.x;
-        if (wallJumpLockoutTimer > 0f)
+        if (inLockout)
         {
             wallJumpLockoutTimer -= Time.fixedDeltaTime;
             effectiveInputX = 0f;
@@ -270,15 +290,25 @@ void Awake()
             return; // No procesar movimiento lateral mientras desliza
         }
 
-        float targetSpeed = effectiveInputX * moveSpeed;
-        float currentSpeed = rb.linearVelocity.x;
+        // Control horizontal. Durante el lockout NO tocamos la velocidad
+        // horizontal: preservamos el impulso del wall jump para que su arco
+        // COMPLETE y despegue de la pared. Antes el MoveTowards hacia 0 (input
+        // muteado) decaia el empuje lateral, dejando un "wall jump incompleto"
+        // que recaia sobre la misma pared = la muñeca se quedaba pegada.
+        if (!inLockout)
+        {
+            // externalSpeedMultiplier ralentiza (StickyFloor); externalPushX
+            // suma un empuje lateral (SeesawPlatform: deslizar al lado bajo).
+            float targetSpeed = effectiveInputX * moveSpeed * externalSpeedMultiplier + externalPushX;
+            float currentSpeed = rb.linearVelocity.x;
 
-        float accel = isGrounded ? acceleration : acceleration * airControl;
-        float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, accel * Time.fixedDeltaTime);
+            float accel = isGrounded ? acceleration : acceleration * airControl;
+            float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, accel * Time.fixedDeltaTime);
 
-        Vector3 vel2 = rb.linearVelocity;
-        vel2.x = newSpeed;
-        rb.linearVelocity = vel2;
+            Vector3 vel2 = rb.linearVelocity;
+            vel2.x = newSpeed;
+            rb.linearVelocity = vel2;
+        }
 
         if (lockZ && Mathf.Abs(rb.position.z - fixedZ) > 0.0001f)
         {
@@ -360,8 +390,8 @@ void Awake()
             vel.y = 0f;
             rb.linearVelocity = vel;
 
-            // Salto escalado por peso: mas pesado = salta menos alto.
-            rb.AddForce(Vector3.up * (jumpForce / weight), ForceMode.VelocityChange);
+            // Salto escalado por peso + impulso extra de plataforma (Seesaw).
+            rb.AddForce(Vector3.up * (jumpForce / weight + externalJumpBoost), ForceMode.VelocityChange);
 
             lastTimeJumpPressed = -999f;
         }
@@ -389,6 +419,36 @@ void Awake()
 
         // (WallJump ya no es Bool: se dispara con SetTrigger arriba y se
         // auto-resetea cuando la transicion lo consume.)
+    }
+
+    // Detecta pared en 'dir' lanzando varios rayos a distintas alturas del
+    // capsule. Excluye alturas por debajo de los pies para no dar falso positivo
+    // cuando el jugador esta parado ENCIMA de una pared fina (la cima de un
+    // Choquito) -- ahi debe contar como suelo, no como pared.
+    private bool CheckWall(Vector3 dir)
+    {
+        float h = capsule.height;
+        Vector3 c = transform.position;
+        // Offsets relativos al centro del capsule (pies en -h*0.5).
+        // El mas bajo (-h*0.20) sigue por encima de los pies para no rozar el
+        // tope de la pared cuando estamos encima.
+        float o0 = h * 0.40f;
+        float o1 = h * 0.20f;
+        float o2 = 0f;
+        float o3 = -h * 0.20f;
+        return Physics.Raycast(c + Vector3.up * o0, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore)
+            || Physics.Raycast(c + Vector3.up * o1, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore)
+            || Physics.Raycast(c + Vector3.up * o2, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore)
+            || Physics.Raycast(c + Vector3.up * o3, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore);
+    }
+
+    // Friccion segun estado de suelo. En el aire = 0 (no se pega a paredes).
+    private void UpdateFriction(bool grounded)
+    {
+        if (playerMat == null || grounded == frictionGrounded) return;
+        frictionGrounded = grounded;
+        playerMat.dynamicFriction = grounded ? dynamicFriction : 0f;
+        playerMat.staticFriction = grounded ? staticFriction : 0f;
     }
 
     public void ReloadOverrides()
