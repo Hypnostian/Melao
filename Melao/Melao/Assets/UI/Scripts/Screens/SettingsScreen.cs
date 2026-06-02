@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using TMPro;
 
 public class SettingsScreen : MonoBehaviour
 {
@@ -17,10 +18,20 @@ public class SettingsScreen : MonoBehaviour
     [Header("Navegación")]
     [SerializeField] private GameObject panelAudio;
     [SerializeField] private GameObject panelControl;
+    [SerializeField] private GameObject panelVideo;
+
+    [Header("Video")]
+    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    [SerializeField] private Toggle fullscreenToggle;
+    [SerializeField] private TMP_Dropdown fullscreenModeDropdown;
+    [SerializeField] private Button applyVideoButton;
 
     [Header("Rebinding")]
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private GameObject bindingRowPrefab;
+
+    private Resolution[] availableResolutions;
+    private int selectedResolutionIndex;
 
     private List<GameObject> bindingRows = new List<GameObject>();
     private string returnScreen = "MainMenu";
@@ -31,6 +42,12 @@ public class SettingsScreen : MonoBehaviour
         LoadSettings();
         ShowPanel("Audio");
         SetupSliderDuck(musicSlider);
+
+        if (applyVideoButton != null)
+            applyVideoButton.onClick.AddListener(OnApplyVideoPressed);
+
+        if (resolutionDropdown != null)
+            resolutionDropdown.onValueChanged.AddListener(OnResolutionSelected);
     }
 
     private void SetupSliderDuck(Slider slider)
@@ -71,14 +88,21 @@ public class SettingsScreen : MonoBehaviour
 
     public void OnAudioTabPressed()  => ShowPanel("Audio");
     public void OnControlTabPressed() => ShowPanel("Control");
+    public void OnVideoTabPressed()  => ShowPanel("Video");
 
     private void ShowPanel(string panel)
     {
         if (panelAudio != null) panelAudio.SetActive(panel == "Audio");
         if (panelControl != null) panelControl.SetActive(panel == "Control");
+        if (panelVideo != null) panelVideo.SetActive(panel == "Video");
 
         if (panel == "Control")
         {
+        }
+        else if (panel == "Video")
+        {
+            PopulateResolutions();
+            PopulateFullscreenModes();
         }
     }
 
@@ -385,6 +409,12 @@ public class SettingsScreen : MonoBehaviour
             try { pendingRebindAction.Enable(); } catch { }
             pendingRebindAction = null;
         }
+
+        if (applyVideoButton != null)
+            applyVideoButton.onClick.RemoveListener(OnApplyVideoPressed);
+        if (resolutionDropdown != null)
+            resolutionDropdown.onValueChanged.RemoveListener(OnResolutionSelected);
+
         SaveAudioSettings();
         var player = FindFirstObjectByType<PlayerController2_5D>(FindObjectsInactive.Exclude);
         if (player != null) player.ReloadOverrides();
@@ -601,6 +631,84 @@ public class SettingsScreen : MonoBehaviour
             if (!string.IsNullOrEmpty(json))
                 inputActions.LoadBindingOverridesFromJson(json);
         }
+
+        LoadVideoSettings();
+    }
+
+    private void PopulateResolutions()
+    {
+        if (resolutionDropdown == null) return;
+
+        if (ScreenManager.Instance != null)
+            availableResolutions = ScreenManager.Instance.GetAvailableResolutions();
+        else
+            availableResolutions = Screen.resolutions;
+
+        var options = new List<TMP_Dropdown.OptionData>();
+        int currentIdx = 0;
+
+        for (int i = 0; i < availableResolutions.Length; i++)
+        {
+            Resolution r = availableResolutions[i];
+            string label = $"{r.width} x {r.height}  ({r.refreshRateRatio.value:F0} Hz)";
+            options.Add(new TMP_Dropdown.OptionData(label));
+            if (r.width == Screen.width && r.height == Screen.height)
+                currentIdx = i;
+        }
+
+        resolutionDropdown.ClearOptions();
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentIdx;
+        resolutionDropdown.RefreshShownValue();
+        selectedResolutionIndex = currentIdx;
+    }
+
+    private void PopulateFullscreenModes()
+    {
+        if (fullscreenModeDropdown == null) return;
+
+        fullscreenModeDropdown.ClearOptions();
+        fullscreenModeDropdown.AddOptions(new List<string>
+        {
+            "Pantalla completa exclusiva",
+            "Pantalla completa (sin bordes)",
+            "Ventana maximizada",
+            "Ventana"
+        });
+
+        fullscreenModeDropdown.value = (int)Screen.fullScreenMode;
+        fullscreenModeDropdown.RefreshShownValue();
+    }
+
+    public void OnResolutionSelected(int index)
+    {
+        selectedResolutionIndex = index;
+    }
+
+    public void OnApplyVideoPressed()
+    {
+        if (availableResolutions == null || selectedResolutionIndex >= availableResolutions.Length)
+            return;
+
+        bool fullscreen = fullscreenToggle != null && fullscreenToggle.isOn;
+        Resolution r = availableResolutions[selectedResolutionIndex];
+
+        if (ScreenManager.Instance != null)
+            ScreenManager.Instance.SetResolution(r.width, r.height, fullscreen);
+        else
+            Screen.SetResolution(r.width, r.height, fullscreen ? Screen.fullScreenMode : FullScreenMode.Windowed);
+
+        PlayerPrefs.SetInt("ResWidth", r.width);
+        PlayerPrefs.SetInt("ResHeight", r.height);
+        PlayerPrefs.SetInt("Fullscreen", fullscreen ? 1 : 0);
+        PlayerPrefs.SetInt("FullscreenMode", fullscreenModeDropdown != null ? fullscreenModeDropdown.value : 1);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadVideoSettings()
+    {
+        if (fullscreenToggle != null)
+            fullscreenToggle.isOn = Screen.fullScreen;
     }
 
     private void SaveOverrides()
@@ -626,8 +734,16 @@ public class SettingsScreen : MonoBehaviour
     {
         SaveAudioSettings();
 
-        // RebindingButton ya guardó en PlayerPrefs al reasignar cada tecla.
-        // Solo sincronizamos al jugador para que las use de inmediato.
+        if (availableResolutions != null && selectedResolutionIndex < availableResolutions.Length)
+        {
+            Resolution r = availableResolutions[selectedResolutionIndex];
+            PlayerPrefs.SetInt("ResWidth", r.width);
+            PlayerPrefs.SetInt("ResHeight", r.height);
+            PlayerPrefs.SetInt("Fullscreen", fullscreenToggle != null && fullscreenToggle.isOn ? 1 : 0);
+            PlayerPrefs.SetInt("FullscreenMode", fullscreenModeDropdown != null ? fullscreenModeDropdown.value : 1);
+            PlayerPrefs.Save();
+        }
+
         var player = FindFirstObjectByType<PlayerController2_5D>(FindObjectsInactive.Exclude);
         if (player != null) player.ReloadOverrides();
 
