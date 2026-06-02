@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8109594896884043308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7217397239968734130, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e4283d6518061343a4dae83e62e82ef, type: 2}
+    - target: {fileID: 919132149155446097, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_Name
+      value: DonPerico_Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 01461936e4d18b146a5940a6615c6055, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4981769712486095401}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8659089336437316379}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8908340691349560358}
+  m_SourcePrefab: {fileID: 100100000, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+--- !u!1 &8956103053054129021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 76aab5bbccd71204897c6fc01a51c907, type: 3}
+  m_PrefabInstance: {fileID: 8109594896884043308}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &4981769712486095401
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956103053054129021}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.72519666
+  m_Height: 1.2657758
+  m_Direction: 1
+  m_Center: {x: 0.000057816505, y: 0.6046334, z: -0.00000011927123}
+--- !u!54 &8659089336437316379
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956103053054129021}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8908340691349560358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956103053054129021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c12640163ca43479355e4787c974d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolSpeed: 2
+  initialDirection: 1
+  turnAtLedges: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1792
+  faceMovement: 1
+  yawOffset: 0
+  hitsToDefeat: 1
+  detectRange: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  stompBounce: 8
+  stompTolerance: 0.15
+  lockToPlayerZ: 1
+  manualZ: 0
+  useManualZ: 0
+  destroyDelay: 1.2
+  aggressivePatrolSpeed: 2.5
+  shootRange: 9
+  shotsPerVolley: 3
+  shootInterval: 0.55
+  projectileSpeed: 5.5
+  muzzleOffset: {x: 0.5, y: 0.55, z: 0}
+  projectilePrefab: {fileID: 0}
+  chargeSpeed: 6
+  chargeDuration: 1.1
+  recoverDuration: 0.8
+  backHitsToDefeat: 1
+  backHitCooldown: 0.4

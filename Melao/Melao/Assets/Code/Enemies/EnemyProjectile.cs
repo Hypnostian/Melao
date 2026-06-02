@@ -23,14 +23,19 @@ public class EnemyProjectile : MonoBehaviour
 
     // Aceite quemado: ambar oscuro.
     public static readonly Color OilColor = new Color(0.82f, 0.58f, 0.07f, 1f);
+    // Proyectiles de Don Perico (GDD): trozos de cebolla y tomate.
+    public static readonly Color OnionColor  = new Color(0.45f, 0.78f, 0.22f, 1f); // cebolla (verde)
+    public static readonly Color TomatoColor = new Color(0.90f, 0.16f, 0.13f, 1f); // tomate (rojo)
 
     private Rigidbody rb;
     private Vector3 velocity;
     private float age;
 
-    // Crea y lanza un proyectil de aceite.
+    // Crea y lanza un proyectil. 'tint' colorea la esfera generada (si no se pasa
+    // prefab); por defecto usa el color de aceite (compatibilidad con Ñuelito).
     public static EnemyProjectile Spawn(Vector3 position, Vector3 direction, float speed,
-                                        GameObject prefab = null, float scale = 0.28f)
+                                        GameObject prefab = null, float scale = 0.28f,
+                                        Color? tint = null)
     {
         GameObject go;
         if (prefab != null)
@@ -40,13 +45,13 @@ public class EnemyProjectile : MonoBehaviour
         else
         {
             go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            go.name = "OilProjectile";
+            go.name = "EnemyProjectile";
             go.transform.position = position;
             go.transform.localScale = Vector3.one * scale;
             var srcCol = go.GetComponent<Collider>();
             if (srcCol != null) Destroy(srcCol);
             var r = go.GetComponent<Renderer>();
-            if (r != null) r.sharedMaterial = MakeOilMaterial(OilColor);
+            if (r != null) r.sharedMaterial = MakeOilMaterial(tint ?? OilColor);
         }
 
         var proj = go.GetComponent<EnemyProjectile>();
