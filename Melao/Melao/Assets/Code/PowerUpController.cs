@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 // Inventario y uso de power-ups de Pops (va en el Player).
 //
-// ENTRADA: el Player tiene un PlayerInput con Behavior = "Send Messages", que
-// llama por nombre a OnUsePowerUp / OnNextPowerUp / OnPrevPowerUp (con InputValue).
-//
 // REGLAS (segun pedido):
 //   - Se RECOGEN del mapa (PowerUpPickup) y quedan en el inventario.
 //   - Solo se usan si estan en el inventario (gating estricto).
@@ -95,8 +92,8 @@ public class PowerUpController : MonoBehaviour
     {
         if (!value.isPressed) return;
         var cur = Current;
-        if (cur == null) return;            // nada seleccionado
-        if (!Has(cur.Value)) return;        // gating: no esta en el inventario
+        if (cur == null) return;
+        if (!Has(cur.Value)) return;
         UsePowerUp(cur.Value);
     }
 
@@ -221,6 +218,7 @@ public class PowerUpController : MonoBehaviour
     {
         var cur = Current;
         Sprite s = cur != null ? IconFor(cur.Value) : null;
-        HUDController.Instance?.UpdatePowerUp(s);
+        PowerUpType type = cur != null ? cur.Value : PowerUpType.Cuquis;
+        HUDController.Instance?.UpdatePowerUp(s, cur != null, type);
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using TMPro;
 
 public class HUDController : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class HUDController : MonoBehaviour
     [Header("Power Up")]
     [SerializeField] private Image powerUpIcon;
     [SerializeField] private GameObject powerUpEmptySlot;
+    [SerializeField] private TMP_Text powerUpNameText;
+    [SerializeField] private Color emptySlotColor = new Color(0, 0, 0, 0.4f);
+    [SerializeField] private Color filledSlotColor = new Color(0.3f, 0.3f, 0.3f, 0.6f);
 
     private List<Image> heartImages = new List<Image>();
 
@@ -95,14 +99,23 @@ public class HUDController : MonoBehaviour
         InitHearts(4, currentHearts);
     }
 
-    public void UpdatePowerUp(Sprite icon)
+    public void UpdatePowerUp(Sprite icon, bool hasPowerUp = false, PowerUpType type = PowerUpType.Cuquis)
     {
         if (powerUpIcon != null)
+        {
             powerUpIcon.gameObject.SetActive(icon != null);
-        if (powerUpEmptySlot != null)
-            powerUpEmptySlot.SetActive(icon == null);
-        if (icon != null && powerUpIcon != null)
-            powerUpIcon.sprite = icon;
+            if (icon != null) powerUpIcon.sprite = icon;
+        }
+
+        if (powerUpNameText != null)
+        {
+            powerUpNameText.gameObject.SetActive(icon == null && hasPowerUp);
+            if (hasPowerUp) powerUpNameText.text = type.ToString();
+        }
+
+        var slotImg = powerUpEmptySlot?.GetComponent<Image>();
+        if (slotImg == null) return;
+        slotImg.color = icon != null || hasPowerUp ? filledSlotColor : emptySlotColor;
     }
 
     private void EnsurePowerUpUI()
@@ -141,7 +154,24 @@ public class HUDController : MonoBehaviour
             iconRt.sizeDelta = new Vector2(40, 40);
         }
 
-        powerUpEmptySlot.SetActive(false);
+        if (powerUpNameText == null)
+        {
+            var textGo = new GameObject("PowerUpName", typeof(RectTransform), typeof(TextMeshProUGUI));
+            textGo.transform.SetParent(powerUpEmptySlot.transform, false);
+            powerUpNameText = textGo.GetComponent<TextMeshProUGUI>();
+            powerUpNameText.fontSize = 10;
+            powerUpNameText.alignment = TextAlignmentOptions.Center;
+            powerUpNameText.color = Color.white;
+            powerUpNameText.transform.SetAsLastSibling();
+
+            var textRt = powerUpNameText.GetComponent<RectTransform>();
+            textRt.anchorMin = Vector2.zero;
+            textRt.anchorMax = Vector2.one;
+            textRt.sizeDelta = Vector2.zero;
+        }
+
+        powerUpIcon.gameObject.SetActive(false);
+        powerUpNameText.gameObject.SetActive(false);
     }
 
     private void EnsureHeartsContainer()
