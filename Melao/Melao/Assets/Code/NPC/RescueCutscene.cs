@@ -36,6 +36,14 @@ public class RescueCutscene : MonoBehaviour
     [Tooltip("Al terminar, devuelve el control a Pops.")]
     [SerializeField] private bool returnControl = true;
 
+    [Header("Avanzar de nivel al terminar (rescate = fin de nivel)")]
+    [Tooltip("Si esta activo, al terminar la cutscene hace la transicion al siguiente nivel (o a creditos si 'nextLevelName' esta vacio).")]
+    [SerializeField] private bool advanceLevelOnEnd = true;
+    [Tooltip("Nombre de la escena del siguiente nivel. Vacio = fin del juego (creditos).")]
+    [SerializeField] private string nextLevelName;
+    [Tooltip("Nombre de esta escena (para marcar completado). Vacio = se autodetecta.")]
+    [SerializeField] private string currentLevelName;
+
     private bool played;
 
     private void Reset()
@@ -109,11 +117,18 @@ public class RescueCutscene : MonoBehaviour
             yield return new WaitForSeconds(runTime);
         }
 
-        // 5) Fin: devolver control.
+        // 5) Fin: devolver control y/o avanzar de nivel.
         SafeBool(popsAnim, "Moving", false);
         if (npc != null) npc.SetRunning(false);
         if (rb != null) rb.isKinematic = prevKinematic;
         if (returnControl && control != null) control.enabled = true;
+
+        if (advanceLevelOnEnd)
+        {
+            // El rescate ES el fin del nivel: transicion al siguiente (o creditos).
+            string cur = string.IsNullOrEmpty(currentLevelName) ? gameObject.scene.name : currentLevelName;
+            ScreenFader.GetOrCreate().FadeToLevel(nextLevelName, cur);
+        }
     }
 
     private static void SafeTrigger(Animator a, string name)
