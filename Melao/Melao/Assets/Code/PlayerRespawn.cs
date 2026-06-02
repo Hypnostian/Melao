@@ -25,11 +25,14 @@ public class PlayerRespawn : MonoBehaviour
     private Vector3 currentSpawnPos;
     private Quaternion currentSpawnRot;
     private Rigidbody rb;
+    private PlayerSizeModifier sizeModifier;
     private bool isRespawning;
+    private bool hasCheckpoint;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        sizeModifier = GetComponent<PlayerSizeModifier>();
 
         if (initialSpawnPoint != null)
         {
@@ -49,6 +52,7 @@ public class PlayerRespawn : MonoBehaviour
     {
         currentSpawnPos = position;
         currentSpawnRot = rotation;
+        hasCheckpoint = true;
     }
 
     public void SetCheckpoint(Transform t)
@@ -57,33 +61,79 @@ public class PlayerRespawn : MonoBehaviour
         SetCheckpoint(t.position, t.rotation);
     }
 
-    private bool TryLoseLife()
+    // Resta una vida y respawnea. Si se acaban las 3 vidas, REINICIA con vidas
+    // llenas en el checkpoint o, si no hay, al inicio del mapa. SIEMPRE respawnea:
+    // nunca queda en un limbo "inmortal" (que era el bug al llegar a 0 vidas).
+    private void HandleDeath(bool immediate)
     {
         currentLives--;
         if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(deathSound);
-        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
         StartCoroutine(VibrateRoutine());
 
         if (currentLives <= 0)
         {
-            UIManager.Instance?.TriggerGameOver();
-            return true;
+            GameOver(immediate);
+            return;
         }
-        return false;
+
+        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        Respawn(immediate);
     }
+
+    // Se acabaron las vidas: reinicio. Funciona igual en CUALQUIER escena (no
+    // depende de que existan UIManager/HUD; por eso vive aqui, en PlayerRespawn).
+    private void GameOver(bool immediate)
+    {
+        currentLives = maxLives;                  // vuelve a tener las 3 vidas
+        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+
+        if (hasCheckpoint)
+        {
+            // Reinicio en el ultimo checkpoint (sin recargar: lo conserva).
+            Respawn(immediate);
+        }
+        else if (SceneLoader.Instance != null)
+        {
+            // Sin checkpoint: reinicia el mapa desde el inicio (recarga la escena).
+            Time.timeScale = 1f;
+            SceneLoader.Instance.ReloadCurrentScene();
+        }
+        else
+        {
+            // Fallback (escena cargada suelta, sin SceneLoader): al spawn inicial.
+            Respawn(immediate);
+        }
+    }
+
+    private void Respawn(bool immediate)
+    {
+        if (immediate) DoRespawn();
+        else StartCoroutine(RespawnRoutine());
+    }
+
+    // Recupera vidas (power-up Heart). No supera maxLives. Devuelve true si
+    // realmente curo (estaba por debajo del maximo).
+    public bool GainLife(int amount = 1)
+    {
+        if (amount <= 0 || currentLives >= maxLives) return false;
+        currentLives = Mathf.Min(maxLives, currentLives + amount);
+        HUDController.Instance?.UpdateHearts(currentLives, maxLives);
+        return true;
+    }
+
+    public int CurrentLives => currentLives;
+    public int MaxLives => maxLives;
 
     public void Kill()
     {
         if (isRespawning) return;
-        if (TryLoseLife()) return;
-        StartCoroutine(RespawnRoutine());
+        HandleDeath(immediate: false);
     }
 
     public void KillNow()
     {
         if (isRespawning) return;
-        if (TryLoseLife()) return;
-        DoRespawn();
+        HandleDeath(immediate: true);
     }
 
     private System.Collections.IEnumerator RespawnRoutine()
@@ -122,6 +172,10 @@ public class PlayerRespawn : MonoBehaviour
 
     private void DoRespawn()
     {
+        // Al morir/respawnear, Pops vuelve a su tamaño normal: nunca queda atascada
+        // pequena/grande tras un power-up de tamano.
+        if (sizeModifier != null) sizeModifier.ResetSize();
+
         if (rb != null)
         {
             rb.linearVelocity = Vector3.zero;

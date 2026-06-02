@@ -23,15 +23,30 @@ public class HazardKill : MonoBehaviour
 
     private float lastKillTime = -999f;
 
+    // Se comprueba en Enter Y en Stay. El Stay es CLAVE: garantiza la muerte aunque
+    // el solapamiento no venga del movimiento normal, sino de OTRO motivo: Pops
+    // creciendo con Merengue / encogiendo con Chips DENTRO del hazard, o quedando
+    // ya solapada. Asi la muerte se verifica en CUALQUIER estado de Pops, no solo
+    // en el frame de entrada. retriggerCooldown evita golpear dos veces seguidas.
     private void OnTriggerEnter(Collider other)
     {
-        // Un trigger no aporta puntos de contacto; si se exige 'desde arriba'
-        // no podemos verificarlo de forma fiable, asi que se ignora.
+        if (onlyKillFromTop) return;
+        TryKill(other);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (onlyKillFromTop) return;
         TryKill(other);
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        if (onlyKillFromTop && !ContactIsFromTop(collision)) return;
+        TryKill(collision.collider);
+    }
+
+    private void OnCollisionStay(Collision collision)
     {
         if (onlyKillFromTop && !ContactIsFromTop(collision)) return;
         TryKill(collision.collider);

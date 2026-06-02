@@ -23,8 +23,8 @@ public class PlayerController2_5D : MonoBehaviour
 
     [Header("Wall Jump")]
     [SerializeField] private float wallCheckDistance = 0.35f;
-    [SerializeField] private float wallJumpUpForce = 4.5f;
-    [SerializeField] private float wallJumpSideForce = 6.5f;
+    [SerializeField] private float wallJumpUpForce = 9f;
+    [SerializeField] private float wallJumpSideForce = 8f;
     [SerializeField] private float wallGraceTime = 0.1f;
     [SerializeField] private LayerMask wallLayer;
 
@@ -111,6 +111,10 @@ public class PlayerController2_5D : MonoBehaviour
 
     // Impulso vertical EXTRA al saltar (lo da p.ej. SeesawPlatform). 0 = normal.
     [HideInInspector] public float externalJumpBoost = 0f;
+
+    // Multiplicador de la fuerza de salto (lo usa PlayerSizeModifier: Merengue
+    // salta mas alto, Chips se puede afinar). 1 = salto normal.
+    [HideInInspector] public float externalJumpMultiplier = 1f;
 
 void Awake()
 {
@@ -390,8 +394,9 @@ void Awake()
             vel.y = 0f;
             rb.linearVelocity = vel;
 
-            // Salto escalado por peso + impulso extra de plataforma (Seesaw).
-            rb.AddForce(Vector3.up * (jumpForce / weight + externalJumpBoost), ForceMode.VelocityChange);
+            // Salto escalado por peso, multiplicador de tamaño (Merengue/Chips) e
+            // impulso extra de plataforma (Seesaw).
+            rb.AddForce(Vector3.up * ((jumpForce / weight) * externalJumpMultiplier + externalJumpBoost), ForceMode.VelocityChange);
 
             lastTimeJumpPressed = -999f;
         }
@@ -427,7 +432,9 @@ void Awake()
     // Choquito) -- ahi debe contar como suelo, no como pared.
     private bool CheckWall(Vector3 dir)
     {
-        float h = capsule.height;
+        // Altura efectiva: respeta la escala del jugador para que la deteccion de
+        // pared siga siendo correcta cuando Chips/Merengue lo encogen o agrandan.
+        float h = capsule.height * Mathf.Abs(transform.lossyScale.y);
         Vector3 c = transform.position;
         // Offsets relativos al centro del capsule (pies en -h*0.5).
         // El mas bajo (-h*0.20) sigue por encima de los pies para no rozar el

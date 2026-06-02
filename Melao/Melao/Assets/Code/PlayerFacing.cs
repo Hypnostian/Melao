@@ -19,6 +19,11 @@ public class PlayerFacing : MonoBehaviour
     private bool facingRight = true;
     private PlayerController2_5D playerController;
 
+    // Lectura publica de la orientacion actual del modelo. La usa el sistema de
+    // power-ups (PowerUpController) para disparar las cuquis hacia donde mira Pops.
+    public bool FacingRight => facingRight;
+    public int FacingSign => facingRight ? 1 : -1;
+
     void Awake()
     {
         // Si el Rigidbody apunta al jugador, intentamos cachear el controller

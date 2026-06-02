@@ -1411,6 +1411,8 @@ GameObject:
   - component: {fileID: 6444043041597093109}
   - component: {fileID: 4444871503603905841}
   - component: {fileID: 1401529320583756474}
+  - component: {fileID: 6625657710964010433}
+  - component: {fileID: 5374737696065826041}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1506,8 +1508,8 @@ MonoBehaviour:
   weight: 1.2
   fallGravityMultiplier: 1.6
   wallCheckDistance: 0.35
-  wallJumpUpForce: 7
-  wallJumpSideForce: 7.5
+  wallJumpUpForce: 9
+  wallJumpSideForce: 8
   wallGraceTime: 0.1
   wallLayer:
     serializedVersion: 2
@@ -1533,6 +1535,7 @@ MonoBehaviour:
   externalSpeedMultiplier: 1
   externalPushX: 0
   externalJumpBoost: 0
+  externalJumpMultiplier: 1
 --- !u!114 &7519266498197698271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,6 +1624,46 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 6e4e39db654a5e647851697826a4bcba, type: 3}
   deathFreezeTime: 0.05
   freezeRigidbodyOnDeath: 1
+--- !u!114 &6625657710964010433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861242392177912162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9fe931c04ff07418973451386d7b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icons: []
+  cuquiProjectilePrefab: {fileID: 8440487239510489341, guid: 808cd1a5cbbf274469af05624331c206, type: 3}
+  cuquiSpeed: 9
+  cuquiCooldown: 3
+  cuquiMuzzle: {fileID: 0}
+  cuquiMuzzleOffset: {x: 0.22, y: 0.05, z: 0}
+  chipsDuration: 15
+  chipsCooldown: 15
+  merengueDuration: 15
+  merengueCooldown: 15
+--- !u!114 &5374737696065826041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861242392177912162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 494d1a5e3e7779d4daeb9c98446c9046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smallScale: 0.5
+  smallSpeedMult: 1
+  smallJumpMult: 1
+  bigScale: 1.7
+  bigSpeedMult: 1.3
+  bigJumpMult: 1.6
 --- !u!1 &8988863106159147876
 GameObject:
   m_ObjectHideFlags: 0
