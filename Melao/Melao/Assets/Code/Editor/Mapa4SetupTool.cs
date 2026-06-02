@@ -117,6 +117,22 @@ public static class Mapa4SetupTool
                 continue;
             }
 
+            // Sombrilla -> pincho (hazard trigger)
+            if (lower.StartsWith("sombrilla"))
+            {
+                SetupHazardTrigger(go, LAYER_DEFAULT);
+                Bump(stats, "Sombrilla (pincho)");
+                continue;
+            }
+
+            // Dracula -> pincho (hazard trigger)
+            if (lower.StartsWith("dracula"))
+            {
+                SetupHazardTrigger(go, LAYER_DEFAULT);
+                Bump(stats, "Dracula (pincho)");
+                continue;
+            }
+
             // Changua (lava) - ahora en su propia capa
             if (lower.StartsWith("changua"))
             {
@@ -421,6 +437,9 @@ public static class Mapa4SetupTool
         {
             var mover = sorted[i].GetComponent<GolPairMover>();
             if (mover == null) continue;
+            // Si el usuario marco manualDirectionOverride, respetar su eleccion
+            // y no tocar invertDirection.
+            if (mover.manualDirectionOverride) continue;
             Undo.RecordObject(mover, "Gol Pair Direction");
             mover.invertDirection = (i % 2) == 1;
             EditorUtility.SetDirty(mover);

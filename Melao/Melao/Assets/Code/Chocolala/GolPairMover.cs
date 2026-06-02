@@ -22,12 +22,16 @@ public class GolPairMover : MonoBehaviour
     [Tooltip("Velocidad angular del seno. Mayor = ciclo mas rapido.")]
     [Min(0f)] public float speed = 1.5f;
 
+    [Header("Direccion del Gol")]
+    [Tooltip("Casilla principal: activar para que este gol vaya en direccion CONTRARIA (empieza bajando en vez de subiendo). Desactivar para direccion normal (sube primero).")]
+    public bool invertDirection = false;
+
+    [Tooltip("Si esta activado, el setup automatico (Tools > Melao > Setup Mapa 4) NO sobreescribira la casilla 'invertDirection' de este gol. Activalo cuando quieras forzar manualmente la direccion sin que el editor te la cambie.")]
+    public bool manualDirectionOverride = false;
+
     [Header("Sincronizacion")]
     [Tooltip("Desfase en radianes. Para alternar un par, dejar uno en 0 y el otro en PI (~3.1416).")]
     public float phaseOffset = 0f;
-
-    [Tooltip("Atajo: invierte el seno (equivalente a phaseOffset = PI). Util para el segundo gol del par.")]
-    public bool invertDirection = false;
 
     [Tooltip("Retraso adicional antes de empezar a moverse (segundos).")]
     [Min(0f)] public float startDelay = 0f;
