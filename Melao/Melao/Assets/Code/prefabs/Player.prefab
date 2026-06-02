@@ -1529,6 +1529,9 @@ MonoBehaviour:
   wallSlideSpeed: -2
   wallStickTime: 0.2
   invertHorizontalInput: 1
+  externalSpeedMultiplier: 1
+  externalPushX: 0
+  externalJumpBoost: 0
 --- !u!114 &7519266498197698271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1595,7 +1598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 3402201490559784652}
   rb: {fileID: 3802511109621594870}
-  cameraRef: {fileID: 0}
+  cameraRef: {fileID: 2032017053693307318, guid: e1516eade1976c643b28fe1d189fd842, type: 3}
   idleFaceSpeed: 4
   moveTurnSpeed: 8
   minVelocityToTurn: 0.1

@@ -68,6 +68,8 @@ public class PlayerController2_5D : MonoBehaviour
 
     private Rigidbody rb;
     private CapsuleCollider capsule;
+    private PhysicsMaterial playerMat;
+    private bool frictionGrounded = true;
     private Vector2 moveInput;
     private bool jumpPressed;
 
@@ -98,20 +100,30 @@ public class PlayerController2_5D : MonoBehaviour
     // (ej. StickyFloor del Arequipe pegajoso). 1 = velocidad normal.
     [HideInInspector] public float externalSpeedMultiplier = 1f;
 
+    // Empuje horizontal externo (unidades/seg) que se SUMA a la velocidad
+    // objetivo. Usado por SeesawPlatform para deslizar al jugador hacia el lado
+    // bajo. Se puede contrarrestar caminando en contra. 0 = sin empuje.
+    [HideInInspector] public float externalPushX = 0f;
+
+    // Impulso vertical EXTRA al saltar (lo da p.ej. SeesawPlatform). 0 = normal.
+    [HideInInspector] public float externalJumpBoost = 0f;
+
 void Awake()
 {
     rb = GetComponent<Rigidbody>();
     capsule = GetComponent<CapsuleCollider>();
 
-    // PhysicsMaterial con friccion REAL: evita resbalon infinito en pendientes
-    // (queso, puente) cuando el jugador no presiona nada. El anti-pegado en
-    // paredes laterales se maneja con el wallStickCounter / wall slide, no
-    // dependemos de friccion cero.
-    PhysicsMaterial playerMat = new PhysicsMaterial("PlayerMaterial");
-    playerMat.dynamicFriction = dynamicFriction;
-    playerMat.staticFriction = staticFriction;
-    playerMat.frictionCombine = PhysicsMaterialCombine.Average;
+    // PhysicsMaterial con friccion DINAMICA (ver UpdateFriction):
+    //  - En el suelo: friccion real -> no resbala en pendientes (queso, puente).
+    //  - En el aire: friccion CERO -> NO se pega a paredes/plataformas al
+    //    empujar contra ellas (cae directo). Combine = Minimum para que el 0
+    //    domine y nunca se quede pegado.
+    playerMat = new PhysicsMaterial("PlayerMaterial");
+    playerMat.frictionCombine = PhysicsMaterialCombine.Minimum;
     playerMat.bounceCombine = PhysicsMaterialCombine.Minimum;
+    playerMat.dynamicFriction = dynamicFriction; // estado inicial (suelo)
+    playerMat.staticFriction = staticFriction;
+    frictionGrounded = true;
     capsule.sharedMaterial = playerMat;
 
     if (groundCheck == null)
@@ -167,6 +179,10 @@ void Awake()
             if (Physics.Raycast(rayOrigin, Vector3.down, rayLen, wallLayer, QueryTriggerInteraction.Ignore))
                 isGrounded = true;
         }
+
+        // Friccion dinamica: con suelo = friccion (no resbala en pendientes);
+        // en el aire = cero (no se pega a paredes/plataformas al empujar).
+        UpdateFriction(isGrounded);
 
         if (isGrounded)
         {
@@ -254,9 +270,9 @@ void Awake()
         // que recaia sobre la misma pared = la muñeca se quedaba pegada.
         if (!inLockout)
         {
-            // externalSpeedMultiplier permite a sistemas externos (ej. StickyFloor /
-            // Arequipe pegajoso) ralentizar al jugador temporalmente. 1 = normal.
-            float targetSpeed = effectiveInputX * moveSpeed * externalSpeedMultiplier;
+            // externalSpeedMultiplier ralentiza (StickyFloor); externalPushX
+            // suma un empuje lateral (SeesawPlatform: deslizar al lado bajo).
+            float targetSpeed = effectiveInputX * moveSpeed * externalSpeedMultiplier + externalPushX;
             float currentSpeed = rb.linearVelocity.x;
 
             float accel = isGrounded ? acceleration : acceleration * airControl;
@@ -343,8 +359,8 @@ void Awake()
             vel.y = 0f;
             rb.linearVelocity = vel;
 
-            // Salto escalado por peso: mas pesado = salta menos alto.
-            rb.AddForce(Vector3.up * (jumpForce / weight), ForceMode.VelocityChange);
+            // Salto escalado por peso + impulso extra de plataforma (Seesaw).
+            rb.AddForce(Vector3.up * (jumpForce / weight + externalJumpBoost), ForceMode.VelocityChange);
 
             lastTimeJumpPressed = -999f;
         }
@@ -393,6 +409,15 @@ void Awake()
             || Physics.Raycast(c + Vector3.up * o1, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore)
             || Physics.Raycast(c + Vector3.up * o2, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore)
             || Physics.Raycast(c + Vector3.up * o3, dir, wallCheckDistance, wallLayer, QueryTriggerInteraction.Ignore);
+    }
+
+    // Friccion segun estado de suelo. En el aire = 0 (no se pega a paredes).
+    private void UpdateFriction(bool grounded)
+    {
+        if (playerMat == null || grounded == frictionGrounded) return;
+        frictionGrounded = grounded;
+        playerMat.dynamicFriction = grounded ? dynamicFriction : 0f;
+        playerMat.staticFriction = grounded ? staticFriction : 0f;
     }
 
     private void OnMove(InputValue value)
