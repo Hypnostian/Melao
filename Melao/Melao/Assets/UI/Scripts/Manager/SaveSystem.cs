@@ -68,7 +68,7 @@ public static class SaveSystem
         Save();
     }
 
-    // — Último nivel (continuar) —
+    // — Último nivel cargado (para continuar) —
 
     public static void SaveLastLevel(string levelName)
     {
@@ -80,6 +80,20 @@ public static class SaveSystem
     public static string GetLastLevel()
     {
         return Load().lastLevel;
+    }
+
+    // — Siguiente nivel (progresión al completar) —
+
+    public static void SaveNextLevel(string levelName)
+    {
+        SaveData data = Load();
+        data.nextLevel = levelName;
+        Save();
+    }
+
+    public static string GetNextLevel()
+    {
+        return Load().nextLevel;
     }
 
     public static bool HasSavedGame()

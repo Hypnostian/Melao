@@ -59,6 +59,7 @@ public class SceneLoader : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         currentGameplayScene = sceneName;
+        SaveSystem.SaveLastLevel(sceneName);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
         if (uiCamera != null) uiCamera.SetActive(false);

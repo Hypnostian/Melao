@@ -5,7 +5,7 @@ public class LevelCompleteScreen : MonoBehaviour
     public void OnNextLevelPressed()
     {
         Time.timeScale = 1f;
-        string next = SaveSystem.GetLastLevel();
+        string next = SaveSystem.GetNextLevel();
         if (!string.IsNullOrEmpty(next))
         {
             SceneLoader.Instance.LoadScene(next);

@@ -9,6 +9,9 @@ public class SaveData
     // Último nivel jugado (para continuar partida)
     public string lastLevel = "";
 
+    // Siguiente nivel después de completar el actual (progresión)
+    public string nextLevel = "";
+
     // Ajustes de audio
     public float musicVolume = 0.8f;
     public float sfxVolume   = 1.0f;

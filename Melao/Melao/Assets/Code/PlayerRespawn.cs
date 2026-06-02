@@ -11,6 +11,9 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private int maxLives = 3;
     private int currentLives;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip deathSound;
+
     [Header("Reset")]
     [Tooltip("Tiempo (segundos) en negro/sin control tras morir. 0 = instantaneo.")]
     [SerializeField] private float deathFreezeTime = 0.05f;
@@ -56,6 +59,7 @@ public class PlayerRespawn : MonoBehaviour
     private bool TryLoseLife()
     {
         currentLives--;
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(deathSound);
         HUDController.Instance?.UpdateHearts(currentLives, maxLives);
 
         if (currentLives <= 0)
@@ -113,6 +117,9 @@ public class PlayerRespawn : MonoBehaviour
             rb.position = currentSpawnPos;
             rb.rotation = currentSpawnRot;
         }
-        transform.SetPositionAndRotation(currentSpawnPos, currentSpawnRot);
+        else
+        {
+            transform.SetPositionAndRotation(currentSpawnPos, currentSpawnRot);
+        }
     }
 }

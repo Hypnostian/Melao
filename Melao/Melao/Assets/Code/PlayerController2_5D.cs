@@ -47,6 +47,9 @@ public class PlayerController2_5D : MonoBehaviour
     [SerializeField] private bool lockZ = true;
     private float fixedZ;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip jumpSound;
+
     [Header("Animator")]
     [SerializeField] private Animator animator;
     [SerializeField] private string jumpTriggerParam = "JumpTrig";
@@ -319,6 +322,8 @@ void Awake()
             }
             else
             {
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(jumpSound);
+
                 // WallJump como Trigger (auto-reset al consumirse).
                 // Antes era Bool y la transicion AnyState->Walljump se re-disparaba
                 // cada frame mientras el bool estaba en true, reseteando la
@@ -347,6 +352,8 @@ void Awake()
 
         if (jumpBuffered && canCoyote)
         {
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(jumpSound);
+
             animator.SetTrigger(jumpTriggerParam);
 
             Vector3 vel = rb.linearVelocity;

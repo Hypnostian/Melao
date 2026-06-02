@@ -54,6 +54,9 @@ public class ChocoBreakLaser : MonoBehaviour
     [Min(0.005f)] public float widthWarning = 0.18f;
     [Min(0.01f)] public float widthActive   = 0.7f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip warningSound;
+
     private enum Phase { Idle, Warning, Active }
     private Phase phase = Phase.Idle;
     private float timer;
@@ -117,6 +120,7 @@ public class ChocoBreakLaser : MonoBehaviour
                 phase = Phase.Warning;
                 timer = warningDuration;
                 ApplyBeamColor(colorWarning, widthWarning);
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(warningSound);
                 break;
 
             case Phase.Warning:

@@ -22,7 +22,7 @@ public class LevelEndTrigger : MonoBehaviour
         SaveSystem.MarkLevelComplete(currentLevelName);
 
         if (!string.IsNullOrEmpty(nextLevelName))
-            SaveSystem.SaveLastLevel(nextLevelName);
+            SaveSystem.SaveNextLevel(nextLevelName);
 
         UIManager.Instance.TriggerLevelComplete();
     }

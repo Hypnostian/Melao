@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainMenuScreen : MonoBehaviour
 {
-    private const string FirstLevel = "Nivel 1 Quipto";
+    private const string FirstLevel = "Nivel 4 Choco-Lala";
 
     public void OnPlayPressed()
     {

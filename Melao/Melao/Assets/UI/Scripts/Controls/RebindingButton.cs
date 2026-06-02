@@ -157,8 +157,8 @@ public class RebindingButton : MonoBehaviour
     {
         action.ApplyBindingOverride(bindingIndex, path);
         action.Enable();
-        UpdateDisplay();
         SaveGlobalOverrides();
+        UpdateDisplay();
     }
 
     private void CancelRebind()

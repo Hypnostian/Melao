@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private AudioSource sfxSource;
 
     private void Awake()
     {
@@ -20,8 +21,31 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Aplicar ajustes guardados al arrancar
+        if (sfxSource == null)
+            sfxSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.outputAudioMixerGroup = FindSFXGroup();
+        sfxSource.playOnAwake = false;
+
         ApplySavedSettings();
+    }
+
+    private AudioMixerGroup FindSFXGroup()
+    {
+        if (audioMixer == null) return null;
+        var groups = audioMixer.FindMatchingGroups("SFX");
+        return groups.Length > 0 ? groups[0] : null;
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip == null || sfxSource == null) return;
+        sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlaySFXAtPoint(AudioClip clip, Vector3 position)
+    {
+        if (clip == null) return;
+        AudioSource.PlayClipAtPoint(clip, position, sfxSource.volume);
     }
 
     public void ApplySavedSettings()
