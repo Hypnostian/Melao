@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainMenuScreen : MonoBehaviour
 {
-    private const string FirstLevel = "Nivel 4 Choco-Lala";
+    private const string FirstLevel = "Nivel 1 Quipto";
 
     [SerializeField] private AudioClip menuMusic;
 
